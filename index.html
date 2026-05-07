@@ -23,16 +23,23 @@
       overflow-x: hidden;
     }
 
-    .cart-icon {
+    .top-bar {
       position: fixed;
       top: 20px;
       right: 20px;
+      display: flex;
+      gap: 15px;
+      z-index: 2000;
+    }
+
+    .cart-icon,
+    .login-btn {
       background: white;
       color: black;
       padding: 15px 20px;
       border-radius: 50px;
       font-weight: bold;
-      z-index: 1000;
+      cursor: pointer;
       box-shadow: 0 0 20px rgba(0,0,0,0.3);
     }
 
@@ -87,11 +94,27 @@
       transform: scale(1.05);
     }
 
+    .filtros {
+      width: 90%;
+      margin: 50px auto;
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .filtros select {
+      padding: 12px 18px;
+      border-radius: 12px;
+      border: none;
+      font-size: 16px;
+    }
+
     .camisetas {
       width: 90%;
       max-width: 1200px;
       margin: auto;
-      padding: 120px 0;
+      padding: 50px 0 120px;
     }
 
     .card {
@@ -195,10 +218,52 @@
       transition: 0.3s;
     }
 
+    .metodos {
+      margin: 25px 0;
+      color: #bbb;
+      line-height: 1.8;
+    }
+
     .close {
       background: crimson;
       color: white;
       margin-top: 20px;
+    }
+
+    .cart-panel {
+      position: fixed;
+      top: 0;
+      right: -400px;
+      width: 350px;
+      height: 100vh;
+      background: #111;
+      padding: 30px;
+      transition: 0.4s;
+      z-index: 3000;
+      overflow-y: auto;
+      box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    }
+
+    .cart-panel.open {
+      right: 0;
+    }
+
+    .cart-item {
+      border-bottom: 1px solid #333;
+      padding: 15px 0;
+    }
+
+    .whatsapp {
+      position: fixed;
+      bottom: 25px;
+      right: 25px;
+      background: #25D366;
+      color: white;
+      padding: 18px 22px;
+      border-radius: 50px;
+      font-size: 22px;
+      text-decoration: none;
+      z-index: 5000;
     }
 
     footer {
@@ -233,6 +298,10 @@
         font-size: 40px;
       }
 
+      .cart-panel {
+        width: 100%;
+      }
+
     }
 
   </style>
@@ -240,8 +309,26 @@
 
 <body>
 
-  <div class="cart-icon">
-    🛒 Carrito: <span id="cartCount">0</span>
+  <div class="top-bar">
+
+    <div class="login-btn" onclick="login()">
+      👤 Login
+    </div>
+
+    <div class="cart-icon" onclick="toggleCart()">
+      🛒 <span id="cartCount">0</span>
+    </div>
+
+  </div>
+
+  <div class="cart-panel" id="cartPanel">
+
+    <h2 style="margin-bottom:30px;">
+      Tu carrito
+    </h2>
+
+    <div id="cartItems"></div>
+
   </div>
 
   <section class="hero">
@@ -264,9 +351,26 @@
 
   </section>
 
+  <div class="filtros">
+
+    <select id="filtroClub" onchange="filtrarProductos()">
+      <option value="all">Todos los clubes</option>
+      <option value="boca">Boca</option>
+      <option value="river">River</option>
+      <option value="argentina">Argentina</option>
+    </select>
+
+    <select id="filtroPrecio" onchange="filtrarProductos()">
+      <option value="all">Todos los precios</option>
+      <option value="90000">Menos de $90.000</option>
+      <option value="95000">Menos de $95.000</option>
+    </select>
+
+  </div>
+
   <section class="camisetas">
 
-    <div class="card">
+    <div class="card" data-club="boca" data-precio="89999">
 
       <img src="b3.png" alt="Boca Juniors">
 
@@ -289,7 +393,7 @@
 
     </div>
 
-    <div class="card">
+    <div class="card" data-club="river" data-precio="84999">
 
       <img src="river.png" alt="River Plate">
 
@@ -312,7 +416,7 @@
 
     </div>
 
-    <div class="card">
+    <div class="card" data-club="argentina" data-precio="94999">
 
       <img src="arg.png" alt="Argentina">
 
@@ -337,8 +441,6 @@
 
   </section>
 
-  <!-- MODAL -->
-
   <div class="modal" id="modal">
 
     <div class="modal-content">
@@ -358,6 +460,12 @@
         <button>XL</button>
       </div>
 
+      <div class="metodos">
+        💳 Visa / Mastercard<br>
+        💵 Transferencia bancaria<br>
+        📱 Mercado Pago
+      </div>
+
       <button class="btn" onclick="agregarAlCarrito()">
         Agregar al carrito
       </button>
@@ -371,6 +479,10 @@
     </div>
 
   </div>
+
+  <a class="whatsapp" href="https://wa.me/5490000000000" target="_blank">
+    💬
+  </a>
 
   <footer>
 
@@ -387,9 +499,9 @@
     const cards = document.querySelectorAll('.card');
 
     let talleSeleccionado = "";
-    let carrito = 0;
+    let carrito = JSON.parse(localStorage.getItem('carritoFAUSZA')) || [];
 
-    // ANIMACION SCROLL
+    actualizarCarrito();
 
     window.addEventListener('scroll', () => {
 
@@ -404,8 +516,6 @@
       });
 
     });
-
-    // ABRIR MODAL
 
     function abrirModal(nombre, precio) {
 
@@ -426,15 +536,11 @@
 
     }
 
-    // CERRAR MODAL
-
     function cerrarModal() {
 
       document.getElementById('modal').style.display = 'none';
 
     }
-
-    // SELECCIONAR TALLE
 
     const botonesTalles = document.querySelectorAll('.talles button');
 
@@ -458,8 +564,6 @@
 
     });
 
-    // AGREGAR AL CARRITO
-
     function agregarAlCarrito() {
 
       if(talleSeleccionado === "") {
@@ -469,11 +573,81 @@
 
       }
 
-      carrito++;
+      const producto = document.getElementById('modalTitulo').innerText;
 
-      document.getElementById('cartCount').innerText = carrito;
+      carrito.push({
+        producto,
+        talle: talleSeleccionado
+      });
+
+      localStorage.setItem('carritoFAUSZA', JSON.stringify(carrito));
+
+      actualizarCarrito();
 
       cerrarModal();
+
+    }
+
+    function actualizarCarrito() {
+
+      document.getElementById('cartCount').innerText = carrito.length;
+
+      const cartItems = document.getElementById('cartItems');
+
+      cartItems.innerHTML = "";
+
+      carrito.forEach(item => {
+
+        cartItems.innerHTML += `
+          <div class="cart-item">
+            <strong>${item.producto}</strong><br>
+            Talle: ${item.talle}
+          </div>
+        `;
+
+      });
+
+    }
+
+    function toggleCart() {
+
+      document.getElementById('cartPanel').classList.toggle('open');
+
+    }
+
+    function login() {
+
+      const usuario = prompt('Ingresá tu usuario');
+
+      if(usuario) {
+        alert('Bienvenido ' + usuario);
+      }
+
+    }
+
+    function filtrarProductos() {
+
+      const club = document.getElementById('filtroClub').value;
+      const precio = document.getElementById('filtroPrecio').value;
+
+      cards.forEach(card => {
+
+        const cardClub = card.dataset.club;
+        const cardPrecio = parseInt(card.dataset.precio);
+
+        let visible = true;
+
+        if(club !== 'all' && club !== cardClub) {
+          visible = false;
+        }
+
+        if(precio !== 'all' && cardPrecio > parseInt(precio)) {
+          visible = false;
+        }
+
+        card.style.display = visible ? 'flex' : 'none';
+
+      });
 
     }
 
@@ -481,4 +655,4 @@
 
 </body>
 </html>
-```
+
