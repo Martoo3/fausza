@@ -1,0 +1,206 @@
+export default function FauzaStore() {
+  const products = [
+    {
+      name: 'Camiseta Oversize Black',
+      price: '$39.999',
+      image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=1200&auto=format&fit=crop'
+    },
+    {
+      name: 'Buzo Premium White',
+      price: '$54.999',
+      image: 'https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=1200&auto=format&fit=crop'
+    },
+    {
+      name: 'Conjunto Urban Style',
+      price: '$69.999',
+      image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?q=80&w=1200&auto=format&fit=crop'
+    },
+    {
+      name: 'Remera Streetwear',
+      price: '$29.999',
+      image: 'https://images.unsplash.com/photo-1523398002811-999ca8dec234?q=80&w=1200&auto=format&fit=crop'
+    }
+  ];
+
+  return (
+    <div className="bg-black text-white min-h-screen font-sans">
+      {/* NAVBAR */}
+      <header className="fixed top-0 left-0 w-full bg-black/80 backdrop-blur-md border-b border-white/10 z-50">
+        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+          <h1 className="text-3xl font-extrabold tracking-[0.3em]">FAUZA</h1>
+
+          <nav className="hidden md:flex gap-8 text-sm uppercase tracking-widest">
+            <a href="#inicio" className="hover:text-gray-300 transition">Inicio</a>
+            <a href="#productos" className="hover:text-gray-300 transition">Productos</a>
+            <a href="#nosotros" className="hover:text-gray-300 transition">Nosotros</a>
+            <a href="#contacto" className="hover:text-gray-300 transition">Contacto</a>
+          </nav>
+
+          <button className="bg-white text-black px-5 py-2 rounded-full font-semibold hover:scale-105 transition-transform">
+            Comprar
+          </button>
+        </div>
+      </header>
+
+      {/* HERO */}
+      <section
+        id="inicio"
+        className="relative h-screen flex items-center justify-center text-center overflow-hidden"
+      >
+        <img
+          src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?q=80&w=1600&auto=format&fit=crop"
+          alt="Fashion"
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+        />
+
+        <div className="relative z-10 px-6 max-w-4xl">
+          <h2 className="text-5xl md:text-7xl font-black leading-tight uppercase">
+            Moda que
+            <span className="block text-gray-300">marca tendencia</span>
+          </h2>
+
+          <p className="mt-6 text-lg md:text-xl text-gray-300">
+            Descubrí las nuevas colecciones urbanas de FAUZA.
+            Calidad premium, diseño exclusivo y estilo único.
+          </p>
+
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+            <button className="bg-white text-black px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform">
+              Ver colección
+            </button>
+
+            <button className="border border-white px-8 py-4 rounded-full font-bold hover:bg-white hover:text-black transition-all">
+              Explorar
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* PRODUCTOS */}
+      <section id="productos" className="max-w-7xl mx-auto px-6 py-24">
+        <div className="flex items-center justify-between mb-12 flex-wrap gap-4">
+          <div>
+            <p className="uppercase tracking-[0.3em] text-gray-400 text-sm">
+              Nueva colección
+            </p>
+            <h3 className="text-4xl font-black mt-2">Productos destacados</h3>
+          </div>
+
+          <button className="border border-white px-6 py-3 rounded-full hover:bg-white hover:text-black transition-all">
+            Ver todos
+          </button>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+          {products.map((product, index) => (
+            <div
+              key={index}
+              className="bg-zinc-900 rounded-3xl overflow-hidden border border-white/10 hover:scale-[1.02] transition-transform duration-300"
+            >
+              <div className="overflow-hidden">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-80 object-cover hover:scale-110 transition-transform duration-500"
+                />
+              </div>
+
+              <div className="p-6 text-left">
+                <h4 className="text-xl font-bold">{product.name}</h4>
+                <p className="text-gray-400 mt-2">Edición limitada premium.</p>
+
+                <div className="flex items-center justify-between mt-6">
+                  <span className="text-2xl font-black">{product.price}</span>
+
+                  <button className="bg-white text-black px-4 py-2 rounded-full font-semibold hover:scale-105 transition-transform">
+                    Comprar
+                  </button>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* NOSOTROS */}
+      <section
+        id="nosotros"
+        className="grid lg:grid-cols-2 gap-10 items-center max-w-7xl mx-auto px-6 py-24"
+      >
+        <div>
+          <p className="uppercase tracking-[0.3em] text-gray-400 text-sm">
+            Sobre FAUZA
+          </p>
+
+          <h3 className="text-5xl font-black mt-4 leading-tight">
+            Diseñamos ropa para destacar.
+          </h3>
+
+          <p className="mt-6 text-gray-300 text-lg leading-relaxed">
+            FAUZA combina moda urbana, minimalismo y calidad premium.
+            Nuestra misión es ofrecer prendas modernas con identidad propia,
+            pensadas para quienes quieren vestir diferente.
+          </p>
+
+          <button className="mt-8 bg-white text-black px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform">
+            Conocer más
+          </button>
+        </div>
+
+        <div>
+          <img
+            src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?q=80&w=1200&auto=format&fit=crop"
+            alt="Moda"
+            className="rounded-3xl shadow-2xl object-cover h-[600px] w-full"
+          />
+        </div>
+      </section>
+
+      {/* NEWSLETTER */}
+      <section className="max-w-5xl mx-auto px-6 py-24">
+        <div className="bg-zinc-900 rounded-[40px] p-10 md:p-16 text-center border border-white/10">
+          <p className="uppercase tracking-[0.3em] text-gray-400 text-sm">
+            Exclusivo
+          </p>
+
+          <h3 className="text-4xl md:text-5xl font-black mt-4">
+            Unite a la comunidad FAUZA
+          </h3>
+
+          <p className="mt-6 text-gray-300 max-w-2xl mx-auto">
+            Recibí descuentos exclusivos, lanzamientos y novedades antes que nadie.
+          </p>
+
+          <div className="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+            <input
+              type="email"
+              placeholder="Tu email"
+              className="bg-black border border-white/10 px-6 py-4 rounded-full w-full sm:w-[400px] outline-none"
+            />
+
+            <button className="bg-white text-black px-8 py-4 rounded-full font-bold hover:scale-105 transition-transform">
+              Suscribirme
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer
+        id="contacto"
+        className="border-t border-white/10 py-10 px-6 text-center text-gray-400"
+      >
+        <h4 className="text-2xl font-black text-white tracking-[0.3em] mb-4">
+          FAUZA
+        </h4>
+
+        <p>Instagram: @fauza.store</p>
+        <p className="mt-2">WhatsApp: +54 11 9999-9999</p>
+
+        <p className="mt-6 text-sm text-gray-500">
+          © 2026 FAUZA — Todos los derechos reservados.
+        </p>
+      </footer>
+    </div>
+  );
+}
