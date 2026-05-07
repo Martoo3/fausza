@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -20,6 +21,19 @@
       color: white;
       font-family: Arial, sans-serif;
       overflow-x: hidden;
+    }
+
+    .cart-icon {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: white;
+      color: black;
+      padding: 15px 20px;
+      border-radius: 50px;
+      font-weight: bold;
+      z-index: 1000;
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
     }
 
     .hero {
@@ -203,6 +217,7 @@
     }
 
     @media(max-width: 900px) {
+
       .hero h1 {
         font-size: 55px;
       }
@@ -219,15 +234,19 @@
       .info h2 {
         font-size: 40px;
       }
+
     }
   </style>
 </head>
+
 <body>
-   <div class="cart-icon">
+
+  <div class="cart-icon">
     🛒 Carrito: <span id="cartCount">0</span>
   </div>
 
   <section class="hero">
+
     <div class="overlay"></div>
 
     <div class="hero-content">
@@ -239,59 +258,78 @@
 
       <button class="btn">Ver colección</button>
     </div>
+
   </section>
 
   <section class="camisetas">
 
     <div class="card">
+
       <img src="b3.png" alt="Boca Juniors">
 
       <div class="info">
+
         <span>NUEVA TEMPORADA</span>
+
         <h2>Boca Juniors 25/26</h2>
 
         <p>
           Camiseta titular con calidad premium y detalles auténticos.
         </p>
 
-        <button class="btn" onclick="abrirModal('Boca Juniors 25/26', '$89.999')">
+        <button class="btn"
+          onclick="abrirModal('Boca Juniors 25/26', '$89.999')">
           Comprar ahora
         </button>
+
       </div>
+
     </div>
 
     <div class="card">
+
       <img src="river.png" alt="River Plate">
 
       <div class="info">
+
         <span>NUEVA TEMPORADA</span>
+
         <h2>River Plate 25/26</h2>
 
         <p>
           Diseño moderno inspirado en la pasión del fútbol argentino.
         </p>
 
-        <button class="btn" onclick="abrirModal('River Plate 25/26', '$84.999')">
+        <button class="btn"
+          onclick="abrirModal('River Plate 25/26', '$84.999')">
           Comprar ahora
         </button>
+
       </div>
+
     </div>
 
     <div class="card">
+
       <img src="arg.png" alt="Argentina">
 
       <div class="info">
+
         <span>EDICIÓN ESPECIAL</span>
+
         <h2>Argentina Campeón</h2>
 
         <p>
           La camiseta de los campeones con un look moderno y elegante.
         </p>
 
-        <button class="btn" onclick="abrirModal('Argentina Campeón', '$94.999')">
+        <button class="btn"
+          onclick="abrirModal('Argentina Campeón', '$94.999')">
           Comprar ahora
         </button>
+
       </div>
+
     </div>
 
   </section>
@@ -299,6 +337,7 @@
   <!-- MODAL -->
 
   <div class="modal" id="modal">
+
     <div class="modal-content">
 
       <h2 id="modalTitulo"></h2>
@@ -316,10 +355,10 @@
         <button>XL</button>
       </div>
 
-  <button class="btn" onclick="agregarAlCarrito()">
-  Agregar al carrito
-   </button>
- 
+      <button class="btn" onclick="agregarAlCarrito()">
+        Agregar al carrito
+      </button>
+
       <br>
 
       <button class="btn close" onclick="cerrarModal()">
@@ -327,19 +366,9 @@
       </button>
 
     </div>
+
   </div>
-  .cart-icon {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: white;
-  color: black;
-  padding: 15px 20px;
-  border-radius: 50px;
-  font-weight: bold;
-  z-index: 1000;
-  box-shadow: 0 0 20px rgba(0,0,0,0.3);
-}
+
   <footer>
     <h3>FAUSZA</h3>
     <p>Camisetas de fútbol argentino 🇦🇷</p>
@@ -348,21 +377,24 @@
   <script>
 
     const cards = document.querySelectorAll('.card');
-    let talleSeleccionado = "";
-let carrito = 0;
 
     let talleSeleccionado = "";
+    let carrito = 0;
 
     // ANIMACION SCROLL
 
     window.addEventListener('scroll', () => {
+
       cards.forEach(card => {
+
         const top = card.getBoundingClientRect().top;
 
         if(top < window.innerHeight - 100) {
           card.classList.add('show');
         }
+
       });
+
     });
 
     // ABRIR MODAL
@@ -378,57 +410,20 @@ let carrito = 0;
       talleSeleccionado = "";
 
       document.querySelectorAll('.talles button').forEach(btn => {
+
         btn.style.background = "#1a1a1a";
         btn.style.border = "1px solid #333";
+
       });
 
     }
 
     // CERRAR MODAL
-const botonesTalles = document.querySelectorAll('.talles button');
 
-botonesTalles.forEach(btn => {
-
-  btn.addEventListener('click', () => {
-
-    botonesTalles.forEach(b => {
-      b.style.background = "#1a1a1a";
-      b.style.border = "1px solid #333";
-    });
-
-    btn.style.background = "#4da3ff";
-    btn.style.border = "1px solid #4da3ff";
-
-    talleSeleccionado = btn.innerText;
-
-  });
-
-});
-
-function agregarAlCarrito() {
-
-  if(talleSeleccionado === "") {
-    alert("Seleccioná un talle");
-    return;
-  }
-
-  carrito++;
-
-  document.getElementById('cartCount').innerText = carrito;
-
-  const producto = document.getElementById('modalTitulo').innerText;
-
-  alert(
-    producto +
-    " agregado al carrito | Talle: " +
-    talleSeleccionado
-  );
-
-  cerrarModal();
-
-}
     function cerrarModal() {
+
       document.getElementById('modal').style.display = 'none';
+
     }
 
     // SELECCIONAR TALLE
@@ -440,8 +435,10 @@ function agregarAlCarrito() {
       btn.addEventListener('click', () => {
 
         botonesTalles.forEach(b => {
+
           b.style.background = "#1a1a1a";
           b.style.border = "1px solid #333";
+
         });
 
         btn.style.background = "#4da3ff";
@@ -458,11 +455,18 @@ function agregarAlCarrito() {
     function agregarAlCarrito() {
 
       if(talleSeleccionado === "") {
+
         alert("Seleccioná un talle");
         return;
+
       }
 
-      const producto = document.getElementById('modalTitulo').innerText;
+      carrito++;
+
+      document.getElementById('cartCount').innerText = carrito;
+
+      const producto =
+        document.getElementById('modalTitulo').innerText;
 
       alert(
         producto +
