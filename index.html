@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -224,6 +223,9 @@
   </style>
 </head>
 <body>
+   <div class="cart-icon">
+    🛒 Carrito: <span id="cartCount">0</span>
+  </div>
 
   <section class="hero">
     <div class="overlay"></div>
@@ -314,10 +316,10 @@
         <button>XL</button>
       </div>
 
-      <button class="btn" onclick="agregarAlCarrito()">
-        Agregar al carrito
-      </button>
-
+  <button class="btn" onclick="agregarAlCarrito()">
+  Agregar al carrito
+   </button>
+ 
       <br>
 
       <button class="btn close" onclick="cerrarModal()">
@@ -326,7 +328,18 @@
 
     </div>
   </div>
-
+  .cart-icon {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: white;
+  color: black;
+  padding: 15px 20px;
+  border-radius: 50px;
+  font-weight: bold;
+  z-index: 1000;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+}
   <footer>
     <h3>FAUSZA</h3>
     <p>Camisetas de fútbol argentino 🇦🇷</p>
@@ -335,6 +348,8 @@
   <script>
 
     const cards = document.querySelectorAll('.card');
+    let talleSeleccionado = "";
+let carrito = 0;
 
     let talleSeleccionado = "";
 
@@ -370,7 +385,48 @@
     }
 
     // CERRAR MODAL
+const botonesTalles = document.querySelectorAll('.talles button');
 
+botonesTalles.forEach(btn => {
+
+  btn.addEventListener('click', () => {
+
+    botonesTalles.forEach(b => {
+      b.style.background = "#1a1a1a";
+      b.style.border = "1px solid #333";
+    });
+
+    btn.style.background = "#4da3ff";
+    btn.style.border = "1px solid #4da3ff";
+
+    talleSeleccionado = btn.innerText;
+
+  });
+
+});
+
+function agregarAlCarrito() {
+
+  if(talleSeleccionado === "") {
+    alert("Seleccioná un talle");
+    return;
+  }
+
+  carrito++;
+
+  document.getElementById('cartCount').innerText = carrito;
+
+  const producto = document.getElementById('modalTitulo').innerText;
+
+  alert(
+    producto +
+    " agregado al carrito | Talle: " +
+    talleSeleccionado
+  );
+
+  cerrarModal();
+
+}
     function cerrarModal() {
       document.getElementById('modal').style.display = 'none';
     }
