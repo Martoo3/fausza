@@ -8,6 +8,7 @@
   <link rel="icon" type="image/png" href="logo.png">
 
   <style>
+
     * {
       margin: 0;
       padding: 0;
@@ -145,8 +146,6 @@
       margin-bottom: 30px;
     }
 
-    /* MODAL */
-
     .modal {
       position: fixed;
       inset: 0;
@@ -235,6 +234,7 @@
       }
 
     }
+
   </style>
 </head>
 
@@ -249,13 +249,17 @@
     <div class="overlay"></div>
 
     <div class="hero-content">
+
       <h1>FAUSZA</h1>
 
       <p>
         Las mejores camisetas del fútbol argentino con diseño premium.
       </p>
 
-      <button class="btn">Ver colección</button>
+      <button class="btn">
+        Ver colección
+      </button>
+
     </div>
 
   </section>
@@ -369,8 +373,13 @@
   </div>
 
   <footer>
+
     <h3>FAUSZA</h3>
-    <p>Camisetas de fútbol argentino 🇦🇷</p>
+
+    <p>
+      Camisetas de fútbol argentino 🇦🇷
+    </p>
+
   </footer>
 
   <script>
@@ -463,15 +472,6 @@
       carrito++;
 
       document.getElementById('cartCount').innerText = carrito;
-
-      const producto =
-        document.getElementById('modalTitulo').innerText;
-
-      alert(
-        producto +
-        " agregado al carrito | Talle: " +
-        talleSeleccionado
-      );
 
       cerrarModal();
 
