@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -180,6 +181,7 @@
       background: #1a1a1a;
       color: white;
       cursor: pointer;
+      transition: 0.3s;
     }
 
     .close {
@@ -312,7 +314,7 @@
         <button>XL</button>
       </div>
 
-      <button class="btn">
+      <button class="btn" onclick="agregarAlCarrito()">
         Agregar al carrito
       </button>
 
@@ -334,6 +336,10 @@
 
     const cards = document.querySelectorAll('.card');
 
+    let talleSeleccionado = "";
+
+    // ANIMACION SCROLL
+
     window.addEventListener('scroll', () => {
       cards.forEach(card => {
         const top = card.getBoundingClientRect().top;
@@ -344,19 +350,76 @@
       });
     });
 
+    // ABRIR MODAL
+
     function abrirModal(nombre, precio) {
+
       document.getElementById('modal').style.display = 'flex';
 
       document.getElementById('modalTitulo').innerText = nombre;
 
       document.getElementById('modalPrecio').innerText = precio;
+
+      talleSeleccionado = "";
+
+      document.querySelectorAll('.talles button').forEach(btn => {
+        btn.style.background = "#1a1a1a";
+        btn.style.border = "1px solid #333";
+      });
+
     }
+
+    // CERRAR MODAL
 
     function cerrarModal() {
       document.getElementById('modal').style.display = 'none';
+    }
+
+    // SELECCIONAR TALLE
+
+    const botonesTalles = document.querySelectorAll('.talles button');
+
+    botonesTalles.forEach(btn => {
+
+      btn.addEventListener('click', () => {
+
+        botonesTalles.forEach(b => {
+          b.style.background = "#1a1a1a";
+          b.style.border = "1px solid #333";
+        });
+
+        btn.style.background = "#4da3ff";
+        btn.style.border = "1px solid #4da3ff";
+
+        talleSeleccionado = btn.innerText;
+
+      });
+
+    });
+
+    // AGREGAR AL CARRITO
+
+    function agregarAlCarrito() {
+
+      if(talleSeleccionado === "") {
+        alert("Seleccioná un talle");
+        return;
+      }
+
+      const producto = document.getElementById('modalTitulo').innerText;
+
+      alert(
+        producto +
+        " agregado al carrito | Talle: " +
+        talleSeleccionado
+      );
+
+      cerrarModal();
+
     }
 
   </script>
 
 </body>
 </html>
+```
