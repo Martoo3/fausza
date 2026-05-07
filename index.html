@@ -1,111 +1,231 @@
-export default function FauzaStore() {
-  const camisetas = [
-    {
-      nombre: 'Boca Juniors 25/26',
-      imagen: 'https://images.unsplash.com/photo-1517466787929-bc90951d0974?q=80&w=1200&auto=format&fit=crop',
-    },
-    {
-      nombre: 'River Plate 25/26',
-      imagen: 'https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=1200&auto=format&fit=crop',
-    },
-    {
-      nombre: 'Argentina Campeón',
-      imagen: 'https://images.unsplash.com/photo-1518604666860-9ed391f76460?q=80&w=1200&auto=format&fit=crop',
-    },
-    {
-      nombre: 'Racing Club',
-      imagen: 'https://images.unsplash.com/photo-1508098682722-e99c643e7485?q=80&w=1200&auto=format&fit=crop',
-    },
-    {
-      nombre: 'San Lorenzo',
-      imagen: 'https://images.unsplash.com/photo-1543357480-c60d40007a3f?q=80&w=1200&auto=format&fit=crop',
-    },
-  ];
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAUSZA</title>
 
-  return (
-    <div className="bg-black text-white min-h-screen overflow-x-hidden">
-      {/* HERO */}
-      <section className="h-screen flex flex-col justify-center items-center text-center relative px-6">
-        <div className="absolute inset-0 bg-gradient-to-b from-blue-900/40 to-black"></div>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
 
-        <div className="relative z-10 max-w-4xl">
-          <h1 className="text-6xl md:text-8xl font-black tracking-tight mb-6">
-            FAUSZA
-          </h1>
+    body {
+      background: #000;
+      color: white;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
+    }
 
-          <p className="text-xl md:text-2xl text-zinc-300 mb-8">
-            Las mejores camisetas del fútbol argentino con estilo premium y diseño moderno.
-          </p>
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(to bottom, #001d3d, #000);
+    }
 
-          <button className="bg-white text-black px-8 py-4 rounded-full text-lg font-bold hover:scale-105 transition-transform duration-300">
-            Ver colección
-          </button>
-        </div>
-      </section>
+    .hero h1 {
+      font-size: 90px;
+      margin-bottom: 20px;
+      letter-spacing: 5px;
+    }
 
-      {/* SCROLL EFFECT */}
-      <section className="px-6 md:px-16 py-24 space-y-32">
-        {camisetas.map((camiseta, index) => (
-          <div
-            key={index}
-            className="group opacity-0 animate-[fadeIn_1s_ease_forwards]"
-            style={{ animationDelay: `${index * 0.3}s` }}
-          >
-            <div className="grid md:grid-cols-2 gap-12 items-center">
-              <div
-                className={`overflow-hidden rounded-3xl shadow-2xl ${
-                  index % 2 !== 0 ? 'md:order-2' : ''
-                }`}
-              >
-                <img
-                  src={camiseta.imagen}
-                  alt={camiseta.nombre}
-                  className="w-full h-[500px] object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-              </div>
+    .hero p {
+      font-size: 22px;
+      color: #ccc;
+      max-width: 700px;
+      margin-bottom: 30px;
+    }
 
-              <div>
-                <p className="text-blue-400 uppercase tracking-[0.3em] mb-4 text-sm">
-                  Nueva Temporada
-                </p>
+    .btn {
+      padding: 15px 35px;
+      border-radius: 50px;
+      border: none;
+      font-size: 18px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+    }
 
-                <h2 className="text-5xl font-black mb-6 leading-tight">
-                  {camiseta.nombre}
-                </h2>
+    .btn:hover {
+      transform: scale(1.05);
+    }
 
-                <p className="text-zinc-400 text-lg leading-relaxed mb-8">
-                  Diseño moderno, calidad premium y detalles auténticos para
-                  vivir la pasión del fútbol argentino.
-                </p>
+    .camisetas {
+      width: 90%;
+      max-width: 1200px;
+      margin: auto;
+      padding: 100px 0;
+    }
 
-                <button className="border border-white px-8 py-4 rounded-full hover:bg-white hover:text-black transition-all duration-300">
-                  Comprar ahora
-                </button>
-              </div>
-            </div>
-          </div>
-        ))}
-      </section>
+    .card {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 60px;
+      margin-bottom: 150px;
+      opacity: 0;
+      transform: translateY(80px);
+      transition: all 1s ease;
+    }
 
-      {/* FOOTER */}
-      <footer className="border-t border-zinc-800 py-12 text-center text-zinc-500">
-        <h3 className="text-2xl font-bold text-white mb-2">FAUSZA</h3>
-        <p>Camisetas de fútbol argentino 🇦🇷</p>
-      </footer>
+    .card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-      <style>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(80px);
-          }
+    .card:nth-child(even) {
+      flex-direction: row-reverse;
+    }
 
-          to {
-            opacity: 1;
-            transform: translateY(0px);
-          }
-        }
-      `}</style>
+    .card img {
+      width: 500px;
+      border-radius: 30px;
+      transition: 0.5s;
+      box-shadow: 0 0 30px rgba(255,255,255,0.1);
+    }
+
+    .card img:hover {
+      transform: scale(1.03);
+    }
+
+    .info {
+      max-width: 450px;
+    }
+
+    .info span {
+      color: #4da3ff;
+      letter-spacing: 4px;
+      font-size: 14px;
+    }
+
+    .info h2 {
+      font-size: 55px;
+      margin: 20px 0;
+    }
+
+    .info p {
+      color: #bbb;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      font-size: 18px;
+    }
+
+    footer {
+      border-top: 1px solid #222;
+      text-align: center;
+      padding: 50px 20px;
+      color: #777;
+    }
+
+    footer h3 {
+      color: white;
+      margin-bottom: 10px;
+      font-size: 30px;
+    }
+
+    @media(max-width: 900px) {
+      .hero h1 {
+        font-size: 55px;
+      }
+
+      .card,
+      .card:nth-child(even) {
+        flex-direction: column;
+      }
+
+      .card img {
+        width: 100%;
+      }
+
+      .info h2 {
+        font-size: 40px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <section class="hero">
+    <h1>FAUSZA</h1>
+    <p>
+      Las mejores camisetas del fútbol argentino con diseño premium.
+    </p>
+
+    <button class="btn">Ver colección</button>
+  </section>
+
+  <section class="camisetas">
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?q=80&w=1200&auto=format&fit=crop">
+
+      <div class="info">
+        <span>NUEVA TEMPORADA</span>
+        <h2>Boca Juniors 25/26</h2>
+        <p>
+          Camiseta titular con calidad premium y detalles auténticos.
+        </p>
+
+        <button class="btn">Comprar ahora</button>
+      </div>
     </div>
-  );
-}
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=1200&auto=format&fit=crop">
+
+      <div class="info">
+        <span>NUEVA TEMPORADA</span>
+        <h2>River Plate 25/26</h2>
+        <p>
+          Diseño moderno inspirado en la pasión del fútbol argentino.
+        </p>
+
+        <button class="btn">Comprar ahora</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="https://images.unsplash.com/photo-1518604666860-9ed391f76460?q=80&w=1200&auto=format&fit=crop">
+
+      <div class="info">
+        <span>EDICIÓN ESPECIAL</span>
+        <h2>Argentina Campeón</h2>
+        <p>
+          La camiseta de los campeones con un look moderno y elegante.
+        </p>
+
+        <button class="btn">Comprar ahora</button>
+      </div>
+    </div>
+
+  </section>
+
+  <footer>
+    <h3>FAUSZA</h3>
+    <p>Camisetas de fútbol argentino 🇦🇷</p>
+  </footer>
+
+  <script>
+    const cards = document.querySelectorAll('.card');
+
+    window.addEventListener('scroll', () => {
+      cards.forEach(card => {
+        const top = card.getBoundingClientRect().top;
+
+        if(top < window.innerHeight - 100) {
+          card.classList.add('show');
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
