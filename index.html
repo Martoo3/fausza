@@ -21,6 +21,13 @@
       overflow-x: hidden;
     }
 
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,20,60,0.7), rgba(0,0,0,0.95));
+      z-index: 0;
+    }
+
     .bg-video {
       position: absolute;
       top: 0;
@@ -173,9 +180,7 @@
 <body>
 
   <section class="hero">
-    <video autoplay muted loop playsinline class="bg-video">
-      <source src="https://cdn.coverr.co/videos/coverr-football-player-running-1569802102762?download=1080p" type="video/mp4">
-    </video>
+    <div class="hero-overlay"></div>
     <h1>FAUSZA</h1>
     <p>
       Las mejores camisetas del fútbol argentino con diseño premium.
@@ -187,7 +192,7 @@
   <section class="camisetas">
 
     <div class="card">
-      <img src="https://images.unsplash.com/photo-1517466787929-bc90951d0974?q=80&w=1200&auto=format&fit=crop">
+      <img src="b3.png">
 
       <div class="info">
         <span>NUEVA TEMPORADA</span>
@@ -201,7 +206,7 @@
     </div>
 
     <div class="card">
-      <img src=b3.png">
+      <img src="https://images.unsplash.com/photo-1522778119026-d647f0596c20?q=80&w=1200&auto=format&fit=crop">
 
       <div class="info">
         <span>NUEVA TEMPORADA</span>
