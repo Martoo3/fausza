@@ -1,673 +1,142 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>FAUSZA</title>
+    <title>FAUSZA</title>
 
-  <link rel="icon" type="image/png" href="logo.png">
+    <link rel="icon" type="image/png" href="logo.png" />
+    <script src="script.js" defer></script>
+  </head>
 
-  <style>
+  <body>
+    <div class="top-bar">
+      <div class="login-btn" onclick="login()">👤 Login</div>
 
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-      scroll-behavior:smooth;
-    }
-
-    body{
-      background:black;
-      color:white;
-      font-family:Arial, sans-serif;
-      overflow-x:hidden;
-    }
-
-    .top-bar{
-      position:fixed;
-      top:20px;
-      right:20px;
-      display:flex;
-      gap:15px;
-      z-index:2000;
-    }
-
-    .cart-icon,
-    .login-btn{
-      background:white;
-      color:black;
-      padding:15px 20px;
-      border-radius:50px;
-      font-weight:bold;
-      cursor:pointer;
-      box-shadow:0 0 20px rgba(0,0,0,0.3);
-    }
-
-    .hero{
-      height:100vh;
-      background-image:url('banner.png');
-      background-size:cover;
-      background-position:center;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-      position:relative;
-      padding:20px;
-    }
-
-    .overlay{
-      position:absolute;
-      inset:0;
-      background:rgba(0,0,0,0.6);
-    }
-
-    .hero-content{
-      position:relative;
-      z-index:2;
-    }
-
-    .hero h1{
-      font-size:90px;
-      letter-spacing:6px;
-      margin-bottom:20px;
-    }
-
-    .hero p{
-      font-size:22px;
-      color:#ddd;
-      max-width:700px;
-      margin-bottom:30px;
-    }
-
-    .btn{
-      padding:15px 35px;
-      border-radius:50px;
-      border:none;
-      font-size:18px;
-      font-weight:bold;
-      cursor:pointer;
-      transition:0.3s;
-    }
-
-    .btn:hover{
-      transform:scale(1.05);
-    }
-
-    .camisetas{
-      width:90%;
-      max-width:1200px;
-      margin:auto;
-      padding:50px 0 120px;
-    }
-
-    .card{
-      display:flex;
-      align-items:center;
-      gap:60px;
-      margin-bottom:140px;
-      opacity:0;
-      transform:translateY(80px);
-      transition:1s ease;
-    }
-
-    .card.show{
-      opacity:1;
-      transform:translateY(0);
-    }
-
-    .card:nth-child(even){
-      flex-direction:row-reverse;
-    }
-
-    .card img{
-      width:500px;
-      border-radius:25px;
-      box-shadow:0 0 30px rgba(255,255,255,0.1);
-      transition:0.4s;
-    }
-
-    .card img:hover{
-      transform:scale(1.03);
-    }
-
-    .info{
-      max-width:450px;
-    }
-
-    .info span{
-      color:#4da3ff;
-      letter-spacing:4px;
-      font-size:13px;
-    }
-
-    .info h2{
-      font-size:55px;
-      margin:20px 0;
-    }
-
-    .info p{
-      color:#bbb;
-      font-size:18px;
-      line-height:1.6;
-      margin-bottom:30px;
-    }
-
-    .modal{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.8);
-      display:none;
-      justify-content:center;
-      align-items:center;
-      z-index:999;
-    }
-
-    .modal-content{
-      background:#111;
-      padding:40px;
-      border-radius:25px;
-      width:90%;
-      max-width:500px;
-      text-align:center;
-    }
-
-    .modal-content h2{
-      font-size:40px;
-      margin-bottom:20px;
-    }
-
-    .precio{
-      font-size:35px;
-      color:#4da3ff;
-      font-weight:bold;
-      margin-bottom:25px;
-    }
-
-    .talles{
-      display:flex;
-      justify-content:center;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-bottom:30px;
-    }
-
-    .talles button{
-      padding:12px 18px;
-      border-radius:12px;
-      border:1px solid #333;
-      background:#1a1a1a;
-      color:white;
-      cursor:pointer;
-      transition:0.3s;
-    }
-
-    .metodos{
-      margin:25px 0;
-      color:#bbb;
-      line-height:1.8;
-    }
-
-    .close{
-      background:crimson;
-      color:white;
-      margin-top:20px;
-    }
-
-    .cart-panel{
-      position:fixed;
-      top:0;
-      right:-400px;
-      width:350px;
-      height:100vh;
-      background:#111;
-      padding:30px;
-      transition:0.4s;
-      z-index:3000;
-      overflow-y:auto;
-      box-shadow:-10px 0 30px rgba(0,0,0,0.5);
-    }
-
-    .cart-panel.open{
-      right:0;
-    }
-
-    .cart-item{
-      border-bottom:1px solid #333;
-      padding:15px 0;
-    }
-
-    .close-cart{
-      position:absolute;
-      top:15px;
-      right:15px;
-      background:crimson;
-      color:white;
-      border:none;
-      width:35px;
-      height:35px;
-      border-radius:50%;
-      cursor:pointer;
-      font-size:18px;
-      font-weight:bold;
-    }
-
-    .btn-eliminar{
-      margin-top:10px;
-      padding:8px 14px;
-      background:crimson;
-      color:white;
-      border:none;
-      border-radius:10px;
-      cursor:pointer;
-      font-weight:bold;
-      transition:0.3s;
-    }
-
-    .btn-eliminar:hover{
-      transform:scale(1.05);
-    }
-
-    .whatsapp{
-      position:fixed;
-      bottom:25px;
-      right:25px;
-      background:#25D366;
-      color:white;
-      padding:18px 22px;
-      border-radius:50px;
-      font-size:22px;
-      text-decoration:none;
-      z-index:5000;
-    }
-
-    footer{
-      border-top:1px solid #222;
-      padding:50px 20px;
-      text-align:center;
-      color:#888;
-    }
-
-    footer h3{
-      color:white;
-      font-size:30px;
-      margin-bottom:10px;
-    }
-
-    @media(max-width:900px){
-
-      .hero h1{
-        font-size:55px;
-      }
-
-      .card,
-      .card:nth-child(even){
-        flex-direction:column;
-      }
-
-      .card img{
-        width:100%;
-      }
-
-      .info h2{
-        font-size:40px;
-      }
-
-      .cart-panel{
-        width:100%;
-      }
-
-    }
-
-  </style>
-</head>
-
-<body>
-
-  <div class="top-bar">
-
-    <div class="login-btn" onclick="login()">
-      👤 Login
+      <div class="cart-icon" onclick="toggleCart()">
+        🛒 <span id="cartCount">0</span>
+      </div>
     </div>
 
-    <div class="cart-icon" onclick="toggleCart()">
-      🛒 <span id="cartCount">0</span>
+    <div class="cart-panel" id="cartPanel">
+      <button class="close-cart" onclick="toggleCart()">✕</button>
+
+      <h2 style="margin-bottom: 30px">Tu carrito</h2>
+
+      <div id="cartItems"></div>
     </div>
 
-  </div>
+    <section class="hero">
+      <div class="overlay"></div>
 
-  <div class="cart-panel" id="cartPanel">
+      <div class="hero-content">
+        <h1>FAUSZA</h1>
 
-    <button class="close-cart" onclick="toggleCart()">
-      ✕
-    </button>
+        <p>Las mejores camisetas del fútbol argentino con diseño premium.</p>
 
-    <h2 style="margin-bottom:30px;">
-      Tu carrito
-    </h2>
+        <button class="btn">Ver colección</button>
+      </div>
+    </section>
 
-    <div id="cartItems"></div>
+    <section class="camisetas">
+      <div class="card">
+        <img src="b3.png" alt="Boca Juniors" />
 
-  </div>
+        <div class="info">
+          <span>NUEVA TEMPORADA</span>
 
-  <section class="hero">
+          <h2>Boca Juniors 25/26</h2>
 
-    <div class="overlay"></div>
+          <p>Camiseta titular con calidad premium y detalles auténticos.</p>
 
-    <div class="hero-content">
+          <button
+            class="btn"
+            onclick="abrirModal('Boca Juniors 25/26', '$89.999')"
+          >
+            Comprar ahora
+          </button>
+        </div>
+      </div>
 
-      <h1>FAUSZA</h1>
+      <div class="card">
+        <img src="river.png" alt="River Plate" />
 
-      <p>
-        Las mejores camisetas del fútbol argentino con diseño premium.
-      </p>
+        <div class="info">
+          <span>NUEVA TEMPORADA</span>
 
-      <button class="btn">
-        Ver colección
-      </button>
+          <h2>River Plate 25/26</h2>
 
-    </div>
+          <p>Diseño moderno inspirado en la pasión del fútbol argentino.</p>
 
-  </section>
+          <button
+            class="btn"
+            onclick="abrirModal('River Plate 25/26', '$84.999')"
+          >
+            Comprar ahora
+          </button>
+        </div>
+      </div>
 
-  <section class="camisetas">
+      <div class="card">
+        <img src="arg.png" alt="Argentina" />
 
-    <div class="card">
+        <div class="info">
+          <span>EDICIÓN ESPECIAL</span>
 
-      <img src="b3.png" alt="Boca Juniors">
+          <h2>Argentina Campeón</h2>
 
-      <div class="info">
+          <p>La camiseta de los campeones con un look moderno y elegante.</p>
 
-        <span>NUEVA TEMPORADA</span>
+          <button
+            class="btn"
+            onclick="abrirModal('Argentina Campeón', '$94.999')"
+          >
+            Comprar ahora
+          </button>
+        </div>
+      </div>
+    </section>
 
-        <h2>Boca Juniors 25/26</h2>
+    <div class="modal" id="modal">
+      <div class="modal-content">
+        <h2 id="modalTitulo"></h2>
 
-        <p>
-          Camiseta titular con calidad premium y detalles auténticos.
-        </p>
+        <div class="precio" id="modalPrecio"></div>
 
-        <button class="btn"
-          onclick="abrirModal('Boca Juniors 25/26', '$89.999')">
-          Comprar ahora
+        <h3 style="margin-bottom: 20px">Elegí tu talle</h3>
+
+        <div class="talles">
+          <button>S</button>
+          <button>M</button>
+          <button>L</button>
+          <button>XL</button>
+        </div>
+
+        <div class="metodos">
+          💳 Visa / Mastercard<br />
+          💵 Transferencia bancaria<br />
+          📱 Mercado Pago
+        </div>
+
+        <button class="btn" onclick="agregarAlCarrito()">
+          Agregar al carrito
         </button>
 
-      </div>
+        <br /><br />
 
+        <button class="btn close" onclick="cerrarModal()">Cerrar</button>
+      </div>
     </div>
 
-    <div class="card">
+    <a class="whatsapp" href="https://wa.me/1125012219" target="_blank"> 💬 </a>
 
-      <img src="river.png" alt="River Plate">
+    <footer>
+      <h3>FAUSZA</h3>
 
-      <div class="info">
-
-        <span>NUEVA TEMPORADA</span>
-
-        <h2>River Plate 25/26</h2>
-
-        <p>
-          Diseño moderno inspirado en la pasión del fútbol argentino.
-        </p>
-
-        <button class="btn"
-          onclick="abrirModal('River Plate 25/26', '$84.999')">
-          Comprar ahora
-        </button>
-
-      </div>
-
-    </div>
-
-    <div class="card">
-
-      <img src="arg.png" alt="Argentina">
-
-      <div class="info">
-
-        <span>EDICIÓN ESPECIAL</span>
-
-        <h2>Argentina Campeón</h2>
-
-        <p>
-          La camiseta de los campeones con un look moderno y elegante.
-        </p>
-
-        <button class="btn"
-          onclick="abrirModal('Argentina Campeón', '$94.999')">
-          Comprar ahora
-        </button>
-
-      </div>
-
-    </div>
-
-  </section>
-
-  <div class="modal" id="modal">
-
-    <div class="modal-content">
-
-      <h2 id="modalTitulo"></h2>
-
-      <div class="precio" id="modalPrecio"></div>
-
-      <h3 style="margin-bottom:20px;">
-        Elegí tu talle
-      </h3>
-
-      <div class="talles">
-        <button>S</button>
-        <button>M</button>
-        <button>L</button>
-        <button>XL</button>
-      </div>
-
-      <div class="metodos">
-        💳 Visa / Mastercard<br>
-        💵 Transferencia bancaria<br>
-        📱 Mercado Pago
-      </div>
-
-      <button class="btn" onclick="agregarAlCarrito()">
-        Agregar al carrito
-      </button>
-
-      <br><br>
-
-      <button class="btn close" onclick="cerrarModal()">
-        Cerrar
-      </button>
-
-    </div>
-
-  </div>
-
-  <a class="whatsapp" href="https://wa.me/5490000000000" target="_blank">
-    💬
-  </a>
-
-  <footer>
-
-    <h3>FAUSZA</h3>
-
-    <p>
-      Camisetas de fútbol argentino 🇦🇷
-    </p>
-
-  </footer>
-
-  <script>
-
-    const cards = document.querySelectorAll('.card');
-
-    let talleSeleccionado = "";
-
-    let carrito =
-      JSON.parse(localStorage.getItem('carritoFAUSZA')) || [];
-
-    actualizarCarrito();
-
-    window.addEventListener('scroll', () => {
-
-      cards.forEach(card => {
-
-        const top = card.getBoundingClientRect().top;
-
-        if(top < window.innerHeight - 100){
-          card.classList.add('show');
-        }
-
-      });
-
-    });
-
-    function abrirModal(nombre, precio){
-
-      document.getElementById('modal').style.display = 'flex';
-
-      document.getElementById('modalTitulo').innerText = nombre;
-
-      document.getElementById('modalPrecio').innerText = precio;
-
-      talleSeleccionado = "";
-
-      document.querySelectorAll('.talles button').forEach(btn => {
-
-        btn.style.background = "#1a1a1a";
-        btn.style.border = "1px solid #333";
-
-      });
-
-    }
-
-    function cerrarModal(){
-
-      document.getElementById('modal').style.display = 'none';
-
-    }
-
-    const botonesTalles =
-      document.querySelectorAll('.talles button');
-
-    botonesTalles.forEach(btn => {
-
-      btn.addEventListener('click', () => {
-
-        botonesTalles.forEach(b => {
-
-          b.style.background = "#1a1a1a";
-          b.style.border = "1px solid #333";
-
-        });
-
-        btn.style.background = "#4da3ff";
-        btn.style.border = "1px solid #4da3ff";
-
-        talleSeleccionado = btn.innerText;
-
-      });
-
-    });
-
-    function agregarAlCarrito(){
-
-      if(talleSeleccionado === ""){
-
-        alert("Seleccioná un talle");
-        return;
-
-      }
-
-      const producto =
-        document.getElementById('modalTitulo').innerText;
-
-      carrito.push({
-        producto,
-        talle: talleSeleccionado
-      });
-
-      localStorage.setItem(
-        'carritoFAUSZA',
-        JSON.stringify(carrito)
-      );
-
-      actualizarCarrito();
-
-      cerrarModal();
-
-    }
-
-    function actualizarCarrito(){
-
-      document.getElementById('cartCount').innerText =
-        carrito.length;
-
-      const cartItems =
-        document.getElementById('cartItems');
-
-      cartItems.innerHTML = "";
-
-      carrito.forEach((item, index) => {
-
-        cartItems.innerHTML += `
-          <div class="cart-item">
-
-            <strong>${item.producto}</strong><br>
-
-            Talle: ${item.talle}
-
-            <br><br>
-
-            <button
-              class="btn-eliminar"
-              onclick="eliminarProducto(${index})">
-
-              Eliminar
-
-            </button>
-
-          </div>
-        `;
-
-      });
-
-    }
-
-    function eliminarProducto(index){
-
-      carrito.splice(index, 1);
-
-      localStorage.setItem(
-        'carritoFAUSZA',
-        JSON.stringify(carrito)
-      );
-
-      actualizarCarrito();
-
-    }
-
-    function toggleCart(){
-
-      document
-        .getElementById('cartPanel')
-        .classList.toggle('open');
-
-    }
-
-    function login(){
-
-      const usuario =
-        prompt('Ingresá tu usuario');
-
-      if(usuario){
-        alert('Bienvenido ' + usuario);
-      }
-
-    }
-
-  </script>
-
-</body>
+      <p>Camisetas de fútbol argentino 🇦🇷</p>
+    </footer>
+  </body>
 </html>
 ```
