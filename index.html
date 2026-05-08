@@ -94,22 +94,6 @@
       transform: scale(1.05);
     }
 
-    .filtros {
-      width: 90%;
-      margin: 50px auto;
-      display: flex;
-      gap: 15px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .filtros select {
-      padding: 12px 18px;
-      border-radius: 12px;
-      border: none;
-      font-size: 16px;
-    }
-
     .camisetas {
       width: 90%;
       max-width: 1200px;
@@ -302,7 +286,22 @@
         width: 100%;
       }
 
-    }
+    /* BOTON CERRAR CARRITO */
+
+.close-cart {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: crimson;
+  color: white;
+  border: none;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+}
 
   </style>
 </head>
@@ -321,7 +320,11 @@
 
   </div>
 
-  <div class="cart-panel" id="cartPanel">
+<div class="cart-panel" id="cartPanel">
+
+  <button class="cerrar-cart" onclick="toggleCart()">
+    ✕
+  </button>
 
     <h2 style="margin-bottom:30px;">
       Tu carrito
@@ -350,23 +353,6 @@
     </div>
 
   </section>
-
-  <div class="filtros">
-
-    <select id="filtroClub" onchange="filtrarProductos()">
-      <option value="all">Todos los clubes</option>
-      <option value="boca">Boca</option>
-      <option value="river">River</option>
-      <option value="argentina">Argentina</option>
-    </select>
-
-    <select id="filtroPrecio" onchange="filtrarProductos()">
-      <option value="all">Todos los precios</option>
-      <option value="90000">Menos de $90.000</option>
-      <option value="95000">Menos de $95.000</option>
-    </select>
-
-  </div>
 
   <section class="camisetas">
 
