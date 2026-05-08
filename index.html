@@ -1,307 +1,325 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>FAUSZA</title>
 
   <link rel="icon" type="image/png" href="logo.png">
 
   <style>
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      scroll-behavior: smooth;
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      scroll-behavior:smooth;
     }
 
-    body {
-      background: black;
-      color: white;
-      font-family: Arial, sans-serif;
-      overflow-x: hidden;
+    body{
+      background:black;
+      color:white;
+      font-family:Arial, sans-serif;
+      overflow-x:hidden;
     }
 
-    .top-bar {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      display: flex;
-      gap: 15px;
-      z-index: 2000;
+    .top-bar{
+      position:fixed;
+      top:20px;
+      right:20px;
+      display:flex;
+      gap:15px;
+      z-index:2000;
     }
 
     .cart-icon,
-    .login-btn {
-      background: white;
-      color: black;
-      padding: 15px 20px;
-      border-radius: 50px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    .login-btn{
+      background:white;
+      color:black;
+      padding:15px 20px;
+      border-radius:50px;
+      font-weight:bold;
+      cursor:pointer;
+      box-shadow:0 0 20px rgba(0,0,0,0.3);
     }
 
-    .hero {
-      height: 100vh;
-      background-image: url('banner.png');
-      background-size: cover;
-      background-position: center;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      position: relative;
-      padding: 20px;
+    .hero{
+      height:100vh;
+      background-image:url('banner.png');
+      background-size:cover;
+      background-position:center;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      text-align:center;
+      position:relative;
+      padding:20px;
     }
 
-    .overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
+    .overlay{
+      position:absolute;
+      inset:0;
+      background:rgba(0,0,0,0.6);
     }
 
-    .hero-content {
-      position: relative;
-      z-index: 2;
+    .hero-content{
+      position:relative;
+      z-index:2;
     }
 
-    .hero h1 {
-      font-size: 90px;
-      letter-spacing: 6px;
-      margin-bottom: 20px;
+    .hero h1{
+      font-size:90px;
+      letter-spacing:6px;
+      margin-bottom:20px;
     }
 
-    .hero p {
-      font-size: 22px;
-      color: #ddd;
-      max-width: 700px;
-      margin-bottom: 30px;
+    .hero p{
+      font-size:22px;
+      color:#ddd;
+      max-width:700px;
+      margin-bottom:30px;
     }
 
-    .btn {
-      padding: 15px 35px;
-      border-radius: 50px;
-      border: none;
-      font-size: 18px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
+    .btn{
+      padding:15px 35px;
+      border-radius:50px;
+      border:none;
+      font-size:18px;
+      font-weight:bold;
+      cursor:pointer;
+      transition:0.3s;
     }
 
-    .btn:hover {
-      transform: scale(1.05);
+    .btn:hover{
+      transform:scale(1.05);
     }
 
-    .camisetas {
-      width: 90%;
-      max-width: 1200px;
-      margin: auto;
-      padding: 50px 0 120px;
+    .camisetas{
+      width:90%;
+      max-width:1200px;
+      margin:auto;
+      padding:50px 0 120px;
     }
 
-    .card {
-      display: flex;
-      align-items: center;
-      gap: 60px;
-      margin-bottom: 140px;
-      opacity: 0;
-      transform: translateY(80px);
-      transition: 1s ease;
+    .card{
+      display:flex;
+      align-items:center;
+      gap:60px;
+      margin-bottom:140px;
+      opacity:0;
+      transform:translateY(80px);
+      transition:1s ease;
     }
 
-    .card.show {
-      opacity: 1;
-      transform: translateY(0);
+    .card.show{
+      opacity:1;
+      transform:translateY(0);
     }
 
-    .card:nth-child(even) {
-      flex-direction: row-reverse;
+    .card:nth-child(even){
+      flex-direction:row-reverse;
     }
 
-    .card img {
-      width: 500px;
-      border-radius: 25px;
-      box-shadow: 0 0 30px rgba(255,255,255,0.1);
-      transition: 0.4s;
+    .card img{
+      width:500px;
+      border-radius:25px;
+      box-shadow:0 0 30px rgba(255,255,255,0.1);
+      transition:0.4s;
     }
 
-    .card img:hover {
-      transform: scale(1.03);
+    .card img:hover{
+      transform:scale(1.03);
     }
 
-    .info {
-      max-width: 450px;
+    .info{
+      max-width:450px;
     }
 
-    .info span {
-      color: #4da3ff;
-      letter-spacing: 4px;
-      font-size: 13px;
+    .info span{
+      color:#4da3ff;
+      letter-spacing:4px;
+      font-size:13px;
     }
 
-    .info h2 {
-      font-size: 55px;
-      margin: 20px 0;
+    .info h2{
+      font-size:55px;
+      margin:20px 0;
     }
 
-    .info p {
-      color: #bbb;
-      font-size: 18px;
-      line-height: 1.6;
-      margin-bottom: 30px;
+    .info p{
+      color:#bbb;
+      font-size:18px;
+      line-height:1.6;
+      margin-bottom:30px;
     }
 
-    .modal {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.8);
-      display: none;
-      justify-content: center;
-      align-items: center;
-      z-index: 999;
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.8);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      z-index:999;
     }
 
-    .modal-content {
-      background: #111;
-      padding: 40px;
-      border-radius: 25px;
-      width: 90%;
-      max-width: 500px;
-      text-align: center;
+    .modal-content{
+      background:#111;
+      padding:40px;
+      border-radius:25px;
+      width:90%;
+      max-width:500px;
+      text-align:center;
     }
 
-    .modal-content h2 {
-      font-size: 40px;
-      margin-bottom: 20px;
+    .modal-content h2{
+      font-size:40px;
+      margin-bottom:20px;
     }
 
-    .precio {
-      font-size: 35px;
-      color: #4da3ff;
-      font-weight: bold;
-      margin-bottom: 25px;
+    .precio{
+      font-size:35px;
+      color:#4da3ff;
+      font-weight:bold;
+      margin-bottom:25px;
     }
 
-    .talles {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-bottom: 30px;
+    .talles{
+      display:flex;
+      justify-content:center;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom:30px;
     }
 
-    .talles button {
-      padding: 12px 18px;
-      border-radius: 12px;
-      border: 1px solid #333;
-      background: #1a1a1a;
-      color: white;
-      cursor: pointer;
-      transition: 0.3s;
+    .talles button{
+      padding:12px 18px;
+      border-radius:12px;
+      border:1px solid #333;
+      background:#1a1a1a;
+      color:white;
+      cursor:pointer;
+      transition:0.3s;
     }
 
-    .metodos {
-      margin: 25px 0;
-      color: #bbb;
-      line-height: 1.8;
+    .metodos{
+      margin:25px 0;
+      color:#bbb;
+      line-height:1.8;
     }
 
-    .close {
-      background: crimson;
-      color: white;
-      margin-top: 20px;
+    .close{
+      background:crimson;
+      color:white;
+      margin-top:20px;
     }
 
-    .cart-panel {
-      position: fixed;
-      top: 0;
-      right: -400px;
-      width: 350px;
-      height: 100vh;
-      background: #111;
-      padding: 30px;
-      transition: 0.4s;
-      z-index: 3000;
-      overflow-y: auto;
-      box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+    .cart-panel{
+      position:fixed;
+      top:0;
+      right:-400px;
+      width:350px;
+      height:100vh;
+      background:#111;
+      padding:30px;
+      transition:0.4s;
+      z-index:3000;
+      overflow-y:auto;
+      box-shadow:-10px 0 30px rgba(0,0,0,0.5);
     }
 
-    .cart-panel.open {
-      right: 0;
+    .cart-panel.open{
+      right:0;
     }
 
-    .cart-item {
-      border-bottom: 1px solid #333;
-      padding: 15px 0;
+    .cart-item{
+      border-bottom:1px solid #333;
+      padding:15px 0;
     }
 
-    .whatsapp {
-      position: fixed;
-      bottom: 25px;
-      right: 25px;
-      background: #25D366;
-      color: white;
-      padding: 18px 22px;
-      border-radius: 50px;
-      font-size: 22px;
-      text-decoration: none;
-      z-index: 5000;
+    .close-cart{
+      position:absolute;
+      top:15px;
+      right:15px;
+      background:crimson;
+      color:white;
+      border:none;
+      width:35px;
+      height:35px;
+      border-radius:50%;
+      cursor:pointer;
+      font-size:18px;
+      font-weight:bold;
     }
 
-    footer {
-      border-top: 1px solid #222;
-      padding: 50px 20px;
-      text-align: center;
-      color: #888;
+    .btn-eliminar{
+      margin-top:10px;
+      padding:8px 14px;
+      background:crimson;
+      color:white;
+      border:none;
+      border-radius:10px;
+      cursor:pointer;
+      font-weight:bold;
+      transition:0.3s;
     }
 
-    footer h3 {
-      color: white;
-      font-size: 30px;
-      margin-bottom: 10px;
+    .btn-eliminar:hover{
+      transform:scale(1.05);
     }
 
-    @media(max-width: 900px) {
+    .whatsapp{
+      position:fixed;
+      bottom:25px;
+      right:25px;
+      background:#25D366;
+      color:white;
+      padding:18px 22px;
+      border-radius:50px;
+      font-size:22px;
+      text-decoration:none;
+      z-index:5000;
+    }
 
-      .hero h1 {
-        font-size: 55px;
+    footer{
+      border-top:1px solid #222;
+      padding:50px 20px;
+      text-align:center;
+      color:#888;
+    }
+
+    footer h3{
+      color:white;
+      font-size:30px;
+      margin-bottom:10px;
+    }
+
+    @media(max-width:900px){
+
+      .hero h1{
+        font-size:55px;
       }
 
       .card,
-      .card:nth-child(even) {
-        flex-direction: column;
+      .card:nth-child(even){
+        flex-direction:column;
       }
 
-      .card img {
-        width: 100%;
+      .card img{
+        width:100%;
       }
 
-      .info h2 {
-        font-size: 40px;
+      .info h2{
+        font-size:40px;
       }
 
-      .cart-panel {
-        width: 100%;
+      .cart-panel{
+        width:100%;
       }
 
-    /* BOTON CERRAR CARRITO */
-
-.close-cart {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: crimson;
-  color: white;
-  border: none;
-  width: 35px;
-  height: 35px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 18px;
-  font-weight: bold;
-}
+    }
 
   </style>
 </head>
@@ -320,11 +338,11 @@
 
   </div>
 
-<div class="cart-panel" id="cartPanel">
+  <div class="cart-panel" id="cartPanel">
 
-  <button class="cerrar-cart" onclick="toggleCart()">
-    ✕
-  </button>
+    <button class="close-cart" onclick="toggleCart()">
+      ✕
+    </button>
 
     <h2 style="margin-bottom:30px;">
       Tu carrito
@@ -356,7 +374,7 @@
 
   <section class="camisetas">
 
-    <div class="card" data-club="boca" data-precio="89999">
+    <div class="card">
 
       <img src="b3.png" alt="Boca Juniors">
 
@@ -379,7 +397,7 @@
 
     </div>
 
-    <div class="card" data-club="river" data-precio="84999">
+    <div class="card">
 
       <img src="river.png" alt="River Plate">
 
@@ -402,7 +420,7 @@
 
     </div>
 
-    <div class="card" data-club="argentina" data-precio="94999">
+    <div class="card">
 
       <img src="arg.png" alt="Argentina">
 
@@ -456,7 +474,7 @@
         Agregar al carrito
       </button>
 
-      <br>
+      <br><br>
 
       <button class="btn close" onclick="cerrarModal()">
         Cerrar
@@ -485,7 +503,9 @@
     const cards = document.querySelectorAll('.card');
 
     let talleSeleccionado = "";
-    let carrito = JSON.parse(localStorage.getItem('carritoFAUSZA')) || [];
+
+    let carrito =
+      JSON.parse(localStorage.getItem('carritoFAUSZA')) || [];
 
     actualizarCarrito();
 
@@ -495,7 +515,7 @@
 
         const top = card.getBoundingClientRect().top;
 
-        if(top < window.innerHeight - 100) {
+        if(top < window.innerHeight - 100){
           card.classList.add('show');
         }
 
@@ -503,7 +523,7 @@
 
     });
 
-    function abrirModal(nombre, precio) {
+    function abrirModal(nombre, precio){
 
       document.getElementById('modal').style.display = 'flex';
 
@@ -522,13 +542,14 @@
 
     }
 
-    function cerrarModal() {
+    function cerrarModal(){
 
       document.getElementById('modal').style.display = 'none';
 
     }
 
-    const botonesTalles = document.querySelectorAll('.talles button');
+    const botonesTalles =
+      document.querySelectorAll('.talles button');
 
     botonesTalles.forEach(btn => {
 
@@ -547,41 +568,30 @@
         talleSeleccionado = btn.innerText;
 
       });
-      .btn-eliminar {
-  margin-top: 10px;
-  padding: 8px 14px;
-  background: crimson;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-}
-
-.btn-eliminar:hover {
-  transform: scale(1.05);
-}
 
     });
 
-    function agregarAlCarrito() {
+    function agregarAlCarrito(){
 
-      if(talleSeleccionado === "") {
+      if(talleSeleccionado === ""){
 
         alert("Seleccioná un talle");
         return;
 
       }
 
-      const producto = document.getElementById('modalTitulo').innerText;
+      const producto =
+        document.getElementById('modalTitulo').innerText;
 
       carrito.push({
         producto,
         talle: talleSeleccionado
       });
 
-      localStorage.setItem('carritoFAUSZA', JSON.stringify(carrito));
+      localStorage.setItem(
+        'carritoFAUSZA',
+        JSON.stringify(carrito)
+      );
 
       actualizarCarrito();
 
@@ -589,42 +599,35 @@
 
     }
 
-   function actualizarCarrito() {
+    function actualizarCarrito(){
 
-  document.getElementById('cartCount').innerText = carrito.length;
+      document.getElementById('cartCount').innerText =
+        carrito.length;
 
-  const cartItems = document.getElementById('cartItems');
-
-  cartItems.innerHTML = "";
-
-  carrito.forEach((item, index) => {
-
-    cartItems.innerHTML += `
-      <div class="cart-item">
-        <strong>${item.producto}</strong><br>
-        Talle: ${item.talle}
-
-        <br><br>
-
-        <button class="btn-eliminar" onclick="eliminarProducto(${index})">
-          Eliminar
-        </button>
-      </div>
-    `;
-
-  });
-
-}
-      const cartItems = document.getElementById('cartItems');
+      const cartItems =
+        document.getElementById('cartItems');
 
       cartItems.innerHTML = "";
 
-      carrito.forEach(item => {
+      carrito.forEach((item, index) => {
 
         cartItems.innerHTML += `
           <div class="cart-item">
+
             <strong>${item.producto}</strong><br>
+
             Talle: ${item.talle}
+
+            <br><br>
+
+            <button
+              class="btn-eliminar"
+              onclick="eliminarProducto(${index})">
+
+              Eliminar
+
+            </button>
+
           </div>
         `;
 
@@ -632,54 +635,35 @@
 
     }
 
-    function toggleCart() {
+    function eliminarProducto(index){
 
-      document.getElementById('cartPanel').classList.toggle('open');
+      carrito.splice(index, 1);
+
+      localStorage.setItem(
+        'carritoFAUSZA',
+        JSON.stringify(carrito)
+      );
+
+      actualizarCarrito();
 
     }
-    function eliminarProducto(index) {
 
-  carrito.splice(index, 1);
+    function toggleCart(){
 
-  localStorage.setItem('carritoFAUSZA', JSON.stringify(carrito));
+      document
+        .getElementById('cartPanel')
+        .classList.toggle('open');
 
-  actualizarCarrito();
+    }
 
-}
+    function login(){
 
-    function login() {
+      const usuario =
+        prompt('Ingresá tu usuario');
 
-      const usuario = prompt('Ingresá tu usuario');
-
-      if(usuario) {
+      if(usuario){
         alert('Bienvenido ' + usuario);
       }
-
-    }
-
-    function filtrarProductos() {
-
-      const club = document.getElementById('filtroClub').value;
-      const precio = document.getElementById('filtroPrecio').value;
-
-      cards.forEach(card => {
-
-        const cardClub = card.dataset.club;
-        const cardPrecio = parseInt(card.dataset.precio);
-
-        let visible = true;
-
-        if(club !== 'all' && club !== cardClub) {
-          visible = false;
-        }
-
-        if(precio !== 'all' && cardPrecio > parseInt(precio)) {
-          visible = false;
-        }
-
-        card.style.display = visible ? 'flex' : 'none';
-
-      });
 
     }
 
@@ -687,4 +671,4 @@
 
 </body>
 </html>
-
+```
