@@ -547,6 +547,21 @@
         talleSeleccionado = btn.innerText;
 
       });
+      .btn-eliminar {
+  margin-top: 10px;
+  padding: 8px 14px;
+  background: crimson;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-eliminar:hover {
+  transform: scale(1.05);
+}
 
     });
 
@@ -574,10 +589,32 @@
 
     }
 
-    function actualizarCarrito() {
+   function actualizarCarrito() {
 
-      document.getElementById('cartCount').innerText = carrito.length;
+  document.getElementById('cartCount').innerText = carrito.length;
 
+  const cartItems = document.getElementById('cartItems');
+
+  cartItems.innerHTML = "";
+
+  carrito.forEach((item, index) => {
+
+    cartItems.innerHTML += `
+      <div class="cart-item">
+        <strong>${item.producto}</strong><br>
+        Talle: ${item.talle}
+
+        <br><br>
+
+        <button class="btn-eliminar" onclick="eliminarProducto(${index})">
+          Eliminar
+        </button>
+      </div>
+    `;
+
+  });
+
+}
       const cartItems = document.getElementById('cartItems');
 
       cartItems.innerHTML = "";
@@ -600,6 +637,15 @@
       document.getElementById('cartPanel').classList.toggle('open');
 
     }
+    function eliminarProducto(index) {
+
+  carrito.splice(index, 1);
+
+  localStorage.setItem('carritoFAUSZA', JSON.stringify(carrito));
+
+  actualizarCarrito();
+
+}
 
     function login() {
 
