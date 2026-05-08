@@ -164,5 +164,26 @@
       }
 
     }
+function enviarWhatsApp(){
 
+  if(carrito.length === 0){
+    alert("Tu carrito está vacío");
+    return;
+  }
+
+  let mensaje = "Hola FAUSZA, quiero comprar la Camiseta De:%0A%0A";
+
+  carrito.forEach(item => {
+
+    mensaje += `• ${item.producto} - Talle ${item.talle}%0A`;
+
+  });
+
+  mensaje += "%0AMi nombre es: ";
+
+  const numero = "5491125012219";
+
+  window.open(`https://wa.me/${numero}?text=${mensaje}`, '_blank');
+
+}
  
