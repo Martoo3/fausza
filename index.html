@@ -13,7 +13,10 @@
 
   <body>
     <div class="top-bar">
-      <div class="login-btn" onclick="login()">👤 Login</div>
+      <div class="login-btn" onclick="login()" id="loginBtn">
+        👤
+        <span id="nombreUsuario">Login</span>
+      </div>
 
       <div class="cart-icon" onclick="toggleCart()">
         🛒 <span id="cartCount">0</span>
