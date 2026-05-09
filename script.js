@@ -12,8 +12,8 @@ actualizarCarrito();
 
 if(usuarioLogeado){
 
-  document.getElementById('loginBtn').innerText =
-    "👤 " + usuarioLogeado;
+  document.getElementById('nombreUsuario').innerText =
+    usuarioLogeado;
 
 }
 
@@ -169,21 +169,30 @@ function login(){
 
   const usuario = prompt('Ingresá tu nombre');
 
-  if(usuario){
+  if(!usuario) return;
 
-    usuarioLogeado = usuario;
+  const direccion = prompt(
+    'Ingresá tu dirección.\n\nEjemplo:\nAv. Rivadavia 1234, casa blanca con portón negro'
+  );
 
-    localStorage.setItem(
-      'usuarioFAUSZA',
-      usuario
-    );
+  if(!direccion) return;
 
-    document.getElementById('loginBtn').innerText =
-      "👤 " + usuario;
+  usuarioLogeado = usuario;
 
-    alert('Bienvenido ' + usuario);
+  localStorage.setItem(
+    'usuarioFAUSZA',
+    usuario
+  );
 
-  }
+  localStorage.setItem(
+    'direccionFAUSZA',
+    direccion
+  );
+
+  document.getElementById('nombreUsuario').innerText =
+    usuario;
+
+  alert('Bienvenido ' + usuario);
 
 }
 
@@ -197,6 +206,9 @@ function enviarWhatsApp(){
 
   }
 
+  const direccion =
+    localStorage.getItem('direccionFAUSZA') || "";
+
   let mensaje =
     "Hola FAUSZA, quiero comprar:%0A%0A";
 
@@ -209,6 +221,9 @@ function enviarWhatsApp(){
 
   mensaje +=
     `%0A%0A👤 Cliente: ${usuarioLogeado}`;
+
+  mensaje +=
+    `%0A📍 Dirección: ${direccion}`;
 
   const numero = "5491125012219";
 
