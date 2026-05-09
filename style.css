@@ -240,7 +240,9 @@
       font-size:18px;
       font-weight:bold;
     }
-
+    .close-cart{
+  z-index: 9999;
+    }
     .btn-eliminar{
       margin-top:10px;
       padding:8px 14px;
@@ -305,6 +307,13 @@
       .cart-panel{
         width:100%;
       }
+.close-cart{
+  top: 10px;
+  right: 10px;
+}
 
+.cart-panel{
+  padding-top: 70px;
+}
     }
 
