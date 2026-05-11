@@ -86,6 +86,19 @@ function abrirModal(nombre, precio){
   document.getElementById('modalTitulo').innerText = nombre;
 
   document.getElementById('modalPrecio').innerText = precio;
+  const stock = stockProductos[nombre];
+
+document.getElementById('stockS').innerText =
+  "S: " + stock.S + " disponibles";
+
+document.getElementById('stockM').innerText =
+  "M: " + stock.M + " disponibles";
+
+document.getElementById('stockL').innerText =
+  "L: " + stock.L + " disponibles";
+
+document.getElementById('stockXL').innerText =
+  "XL: " + stock.XL + " disponibles";
 
   talleSeleccionado = "";
 
@@ -95,7 +108,9 @@ function abrirModal(nombre, precio){
     btn.style.border = "1px solid #333";
 
   });
+  cantidadSeleccionada = 1;
 
+  document.getElementById('cantidad').innerText = 1;
 }
 
 function cerrarModal(){
@@ -126,7 +141,20 @@ botonesTalles.forEach(btn => {
   });
 
 });
+let cantidadSeleccionada = 1;
 
+function cambiarCantidad(valor){
+
+  cantidadSeleccionada += valor;
+
+  if(cantidadSeleccionada < 1){
+    cantidadSeleccionada = 1;
+  }
+
+  document.getElementById('cantidad').innerText =
+    cantidadSeleccionada;
+
+}
 function agregarAlCarrito(){
 
   if(talleSeleccionado === ""){
@@ -143,25 +171,30 @@ function agregarAlCarrito(){
   let stock =
     stockProductos[producto][talleSeleccionado];
 
-  if(stock <= 0){
+  if(stock < cantidadSeleccionada){
 
-    alert("Sin stock para este talle");
+    alert("No hay suficiente stock");
 
     return;
 
   }
 
-  stockProductos[producto][talleSeleccionado]--;
+  stockProductos[producto][talleSeleccionado] -=
+    cantidadSeleccionada;
 
   localStorage.setItem(
     'stockFAUSZA',
     JSON.stringify(stockProductos)
   );
 
-  carrito.push({
-    producto,
-    talle: talleSeleccionado
-  });
+  for(let i = 0; i < cantidadSeleccionada; i++){
+
+    carrito.push({
+      producto,
+      talle: talleSeleccionado
+    });
+
+  }
 
   localStorage.setItem(
     'carritoFAUSZA',
@@ -171,6 +204,12 @@ function agregarAlCarrito(){
   actualizarCarrito();
 
   actualizarStockVisual();
+
+  mostrarNotificacion();
+
+  cantidadSeleccionada = 1;
+
+  document.getElementById('cantidad').innerText = 1;
 
   cerrarModal();
 
@@ -420,5 +459,19 @@ function abrirAdmin(){
   actualizarStockVisual();
 
   alert("Stock actualizado");
+
+}
+function mostrarNotificacion(){
+
+  const notif =
+    document.getElementById('notificacion');
+
+  notif.classList.add('show');
+
+  setTimeout(() => {
+
+    notif.classList.remove('show');
+
+  }, 2000);
 
 }
