@@ -370,3 +370,21 @@
   background: #e5e5e5;
   padding: 20px;
 }
+.stock{
+  color: #00ff88;
+  font-size: 14px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+.admin-btn{
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: red;
+  color: white;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  z-index: 9999;
+}
