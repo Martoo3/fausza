@@ -244,7 +244,7 @@ function actualizarStockVisual(){
   cards.forEach(card => {
 
     const titulo =
-      card.querySelector('h2').innerText;
+      card.querySelector('h2').innerText.trim();
 
     const boton =
       card.querySelector('.btn');
@@ -254,11 +254,61 @@ function actualizarStockVisual(){
     const talles =
       stockProductos[titulo];
 
+    if(!talles){
+      console.log("No existe stock para:", titulo);
+      return;
+    }
+
     for(let talle in talles){
 
       totalStock += talles[talle];
 
     }
+
+    let stockTexto =
+      card.querySelector('.stock');
+
+    if(!stockTexto){
+
+      stockTexto =
+        document.createElement('p');
+
+      stockTexto.classList.add('stock');
+
+      boton.before(stockTexto);
+
+    }
+
+    if(totalStock <= 0){
+
+      stockTexto.innerText = "SIN STOCK";
+
+      stockTexto.style.color = "red";
+
+      boton.disabled = true;
+
+      boton.innerText = "Sin stock";
+
+      boton.style.opacity = "0.5";
+
+    } else {
+
+      stockTexto.innerText =
+        "Stock disponible: " + totalStock;
+
+      stockTexto.style.color = "#00ff88";
+
+      boton.disabled = false;
+
+      boton.innerText = "Comprar ahora";
+
+      boton.style.opacity = "1";
+
+    }
+
+  });
+
+}
 
     let stockTexto =
       card.querySelector('.stock');
