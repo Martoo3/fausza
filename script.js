@@ -28,12 +28,13 @@ let stockProductos =
       L: 2,
       XL: 1
     },
-"Camiseta Atomik Titular San Lorenzo de Almagro 2026": {
-  S: 3,
-  M: 2,
-  L: 2,
-  XL: 1
-},
+
+    "Camiseta Atomik Titular San Lorenzo de Almagro 2026": {
+      S: 3,
+      M: 2,
+      L: 2,
+      XL: 1
+    },
 
     "Independiente 25/26": {
       S: 2,
@@ -55,6 +56,7 @@ let usuarioLogeado =
   localStorage.getItem('usuarioFAUSZA') || "";
 
 actualizarCarrito();
+actualizarStockVisual();
 
 if(usuarioLogeado){
 
@@ -150,10 +152,11 @@ function agregarAlCarrito(){
   }
 
   stockProductos[producto][talleSeleccionado]--;
+
   localStorage.setItem(
-  'stockFAUSZA',
-  JSON.stringify(stockProductos)
-);
+    'stockFAUSZA',
+    JSON.stringify(stockProductos)
+  );
 
   carrito.push({
     producto,
@@ -218,10 +221,11 @@ function eliminarProducto(index){
     carrito[index].talle;
 
   stockProductos[producto][talle]++;
+
   localStorage.setItem(
-  'stockFAUSZA',
-  JSON.stringify(stockProductos)
-);
+    'stockFAUSZA',
+    JSON.stringify(stockProductos)
+  );
 
   carrito.splice(index, 1);
 
@@ -249,78 +253,21 @@ function actualizarStockVisual(){
     const boton =
       card.querySelector('.btn');
 
-    let totalStock = 0;
+    const stockTexto =
+      card.querySelector('.stock');
 
     const talles =
       stockProductos[titulo];
 
     if(!talles){
-      console.log("No existe stock para:", titulo);
       return;
     }
+
+    let totalStock = 0;
 
     for(let talle in talles){
 
       totalStock += talles[talle];
-
-    }
-
-    let stockTexto =
-      card.querySelector('.stock');
-
-    if(!stockTexto){
-
-      stockTexto =
-        document.createElement('p');
-
-      stockTexto.classList.add('stock');
-
-      boton.before(stockTexto);
-
-    }
-
-    if(totalStock <= 0){
-
-      stockTexto.innerText = "SIN STOCK";
-
-      stockTexto.style.color = "red";
-
-      boton.disabled = true;
-
-      boton.innerText = "Sin stock";
-
-      boton.style.opacity = "0.5";
-
-    } else {
-
-      stockTexto.innerText =
-        "Stock disponible: " + totalStock;
-
-      stockTexto.style.color = "#00ff88";
-
-      boton.disabled = false;
-
-      boton.innerText = "Comprar ahora";
-
-      boton.style.opacity = "1";
-
-    }
-
-  });
-
-}
-
-    let stockTexto =
-      card.querySelector('.stock');
-
-    if(!stockTexto){
-
-      stockTexto =
-        document.createElement('p');
-
-      stockTexto.classList.add('stock');
-
-      boton.before(stockTexto);
 
     }
 
@@ -370,7 +317,7 @@ function login(){
   if(!usuario) return;
 
   const direccion = prompt(
-    'Ingresá tu dirección.\n\nEjemplo:\nAv. Rivadavia 1234, casa blanca con portón negro'
+    'Ingresá tu dirección.\n\nEjemplo:\nAv. Rivadavia 1234'
   );
 
   if(!direccion) return;
@@ -418,7 +365,7 @@ function enviarWhatsApp(){
   });
 
   mensaje +=
-    `%0A%0A👤 Cliente: ${usuarioLogeado}`;
+    `%0A👤 Cliente: ${usuarioLogeado}`;
 
   mensaje +=
     `%0A📍 Dirección: ${direccion}`;
@@ -432,23 +379,28 @@ function enviarWhatsApp(){
 
 }
 
-actualizarStockVisual();
 function abrirAdmin(){
 
   let password =
     prompt("Contraseña admin");
 
   if(password !== "Martin2022"){
+
     alert("Contraseña incorrecta");
+
     return;
+
   }
 
   let producto =
     prompt("Nombre exacto del producto");
 
   if(!stockProductos[producto]){
+
     alert("Producto no encontrado");
+
     return;
+
   }
 
   let talle =
