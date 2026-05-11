@@ -415,3 +415,11 @@ footer h3{
   }
 
 }
+.stock{
+  color: #00ff88;
+  font-weight: bold;
+  margin-top: 10px;
+}
+.sin-stock{
+  color: red;
+}
