@@ -1,3 +1,50 @@
+let stockProductos =
+  JSON.parse(localStorage.getItem('stockFAUSZA')) || {
+
+    "Boca Juniors 25/26": {
+      S: 3,
+      M: 5,
+      L: 2,
+      XL: 1
+    },
+
+    "River Plate 25/26": {
+      S: 4,
+      M: 4,
+      L: 3,
+      XL: 2
+    },
+
+    "Argentina Campeón": {
+      S: 2,
+      M: 2,
+      L: 1,
+      XL: 0
+    },
+
+    "Racing Club 25/26": {
+      S: 5,
+      M: 3,
+      L: 2,
+      XL: 1
+    },
+
+    "San Lorenzo 25/26": {
+      S: 3,
+      M: 2,
+      L: 2,
+      XL: 1
+    },
+
+    "Independiente 25/26": {
+      S: 2,
+      M: 1,
+      L: 0,
+      XL: 1
+    }
+
+};
+
 const cards = document.querySelectorAll('.card');
 
 let talleSeleccionado = "";
@@ -92,6 +139,23 @@ function agregarAlCarrito(){
   const producto =
     document.getElementById('modalTitulo').innerText;
 
+  let stock =
+    stockProductos[producto][talleSeleccionado];
+
+  if(stock <= 0){
+
+    alert("Sin stock para este talle");
+
+    return;
+
+  }
+
+  stockProductos[producto][talleSeleccionado]--;
+  localStorage.setItem(
+  'stockFAUSZA',
+  JSON.stringify(stockProductos)
+);
+
   carrito.push({
     producto,
     talle: talleSeleccionado
@@ -103,6 +167,8 @@ function agregarAlCarrito(){
   );
 
   actualizarCarrito();
+
+  actualizarStockVisual();
 
   cerrarModal();
 
@@ -146,6 +212,18 @@ function actualizarCarrito(){
 
 function eliminarProducto(index){
 
+  const producto =
+    carrito[index].producto;
+
+  const talle =
+    carrito[index].talle;
+
+  stockProductos[producto][talle]++;
+  localStorage.setItem(
+  'stockFAUSZA',
+  JSON.stringify(stockProductos)
+);
+
   carrito.splice(index, 1);
 
   localStorage.setItem(
@@ -154,6 +232,77 @@ function eliminarProducto(index){
   );
 
   actualizarCarrito();
+
+  actualizarStockVisual();
+
+}
+
+function actualizarStockVisual(){
+
+  const cards =
+    document.querySelectorAll('.card');
+
+  cards.forEach(card => {
+
+    const titulo =
+      card.querySelector('h2').innerText;
+
+    const boton =
+      card.querySelector('.btn');
+
+    let totalStock = 0;
+
+    const talles =
+      stockProductos[titulo];
+
+    for(let talle in talles){
+
+      totalStock += talles[talle];
+
+    }
+
+    let stockTexto =
+      card.querySelector('.stock');
+
+    if(!stockTexto){
+
+      stockTexto =
+        document.createElement('p');
+
+      stockTexto.classList.add('stock');
+
+      boton.before(stockTexto);
+
+    }
+
+    if(totalStock <= 0){
+
+      stockTexto.innerText = "SIN STOCK";
+
+      stockTexto.style.color = "red";
+
+      boton.disabled = true;
+
+      boton.innerText = "Sin stock";
+
+      boton.style.opacity = "0.5";
+
+    } else {
+
+      stockTexto.innerText =
+        "Stock disponible: " + totalStock;
+
+      stockTexto.style.color = "#00ff88";
+
+      boton.disabled = false;
+
+      boton.innerText = "Comprar ahora";
+
+      boton.style.opacity = "1";
+
+    }
+
+  });
 
 }
 
@@ -231,5 +380,44 @@ function enviarWhatsApp(){
     `https://wa.me/${numero}?text=${mensaje}`,
     '_blank'
   );
+
+}
+
+actualizarStockVisual();
+function abrirAdmin(){
+
+  let password =
+    prompt("Contraseña admin");
+
+  if(password !== "Martin2022"){
+    alert("Contraseña incorrecta");
+    return;
+  }
+
+  let producto =
+    prompt("Nombre exacto del producto");
+
+  if(!stockProductos[producto]){
+    alert("Producto no encontrado");
+    return;
+  }
+
+  let talle =
+    prompt("Talle: S M L XL");
+
+  let nuevoStock =
+    parseInt(prompt("Nuevo stock"));
+
+  stockProductos[producto][talle] =
+    nuevoStock;
+
+  localStorage.setItem(
+    'stockFAUSZA',
+    JSON.stringify(stockProductos)
+  );
+
+  actualizarStockVisual();
+
+  alert("Stock actualizado");
 
 }
