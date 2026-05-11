@@ -46,7 +46,7 @@ body{
   position:relative;
   height:100vh;
 
-  background-image:url('banner.png');
+background-image:url('banner.png');
   background-size:cover;
   background-position:center;
 
