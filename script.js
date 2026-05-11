@@ -28,13 +28,12 @@ let stockProductos =
       L: 2,
       XL: 1
     },
-
-    "San Lorenzo 25/26": {
-      S: 3,
-      M: 2,
-      L: 2,
-      XL: 1
-    },
+"Camiseta Atomik Titular San Lorenzo de Almagro 2026": {
+  S: 3,
+  M: 2,
+  L: 2,
+  XL: 1
+},
 
     "Independiente 25/26": {
       S: 2,
