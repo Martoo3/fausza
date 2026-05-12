@@ -1,243 +1,173 @@
 <!doctype html>
 <html lang="es">
   <head>
-    <link rel="stylesheet" href="style.css" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
     <title>FAUSZA</title>
-
-    <link rel="icon" type="image/png" href="logo.png" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/png" href="fausza-logo.png" />
     <script src="script.js" defer></script>
   </head>
 
   <body>
-    <!-- TOP BAR -->
+    <header class="site-header">
+      <a class="brand" href="#inicio" aria-label="Ir al inicio">
+        <img src="fausza-logo.png" alt="FAUSZA" />
+      </a>
 
-    <div class="top-bar">
-      <div class="login-btn" onclick="login()" id="loginBtn">
-        👤
-        <span id="nombreUsuario">Login</span>
+      <button class="menu-toggle" onclick="toggleMenu()" aria-label="Abrir menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="main-nav" id="mainNav">
+        <a href="#inicio">Inicio</a>
+        <a href="#productos">Productos</a>
+        <a href="#vendidos">Mas vendidos</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+
+      <div class="header-actions">
+        <button class="icon-action" onclick="abrirLogin()" id="loginBtn">
+          <span class="icon">U</span>
+          <span id="nombreUsuario">Login</span>
+        </button>
+        <button class="icon-action cart-action" onclick="toggleCart()">
+          <span class="icon">C</span>
+          <span>Carrito</span>
+          <strong id="cartCount">0</strong>
+        </button>
       </div>
+    </header>
 
-      <div class="cart-icon" onclick="toggleCart()">
-        🛒 <span id="cartCount">0</span>
-      </div>
-    </div>
-
-    <!-- CARRITO -->
-
-    <div class="cart-panel" id="cartPanel">
-      <button class="close-cart" onclick="toggleCart()">✕</button>
-
-      <h2 style="margin-bottom: 30px">Tu carrito</h2>
-
+    <aside class="cart-panel" id="cartPanel">
+      <button class="close-cart" onclick="toggleCart()" aria-label="Cerrar carrito">x</button>
+      <h2>Tu carrito</h2>
       <div id="cartItems"></div>
+      <button class="btn btn-full" onclick="enviarWhatsApp()">Finalizar compra</button>
+    </aside>
 
-      <button class="btn" onclick="enviarWhatsApp()">Finalizar compra</button>
-    </div>
-
-    <!-- HERO -->
-
-    <section class="hero">
-      <div class="overlay"></div>
-
-      <div class="hero-content">
-        <h1>FAUSZA</h1>
-
-        <p>Las mejores camisetas del fútbol argentino con diseño premium.</p>
-      </div>
-    </section>
-
-    <!-- PRODUCTOS -->
-
-    <section class="camisetas">
-      <!-- BOCA -->
-
-      <div class="card">
-        <img src="b3.png" alt="Boca Juniors" />
-
-        <div class="info">
-          <span>NUEVA TEMPORADA</span>
-
-          <h2>Boca Juniors 25/26</h2>
-
-          <p>Camiseta titular con calidad premium y detalles auténticos.</p>
-
-          <p class="stock">Stock disponible: 8</p>
-
-          <button
-            class="btn"
-            onclick="abrirModal('Boca Juniors 25/26', '$89.999')"
-          >
-            Comprar ahora
-          </button>
+    <main>
+      <section class="hero" id="inicio">
+        <div class="overlay"></div>
+        <div class="hero-content">
+          <span class="eyebrow">Camisetas premium</span>
+          <h1>FAUSZA</h1>
+          <p>Equipos argentinos, terminacion superior y una experiencia de compra simple.</p>
+          <a class="btn hero-btn" href="#productos">Ver catalogo</a>
         </div>
-      </div>
+      </section>
 
-      <!-- RIVER -->
+      <section class="section-intro" id="productos">
+        <span class="eyebrow">Catalogo</span>
+        <h2>Camisetas destacadas</h2>
+        <p>Seleccion curada con stock por talle actualizado en tiempo real.</p>
+      </section>
 
-      <div class="card">
-        <img src="river.png" alt="River Plate" />
+      <section class="camisetas">
+        <article class="card">
+          <img src="b3.png" alt="Camiseta Boca Juniors" />
+          <div class="info">
+            <span>NUEVA TEMPORADA</span>
+            <h2>Boca Juniors 25/26</h2>
+            <p>Camiseta titular con calidad premium y detalles autenticos.</p>
+            <p class="stock">Stock disponible: 8</p>
+            <button class="btn" onclick="abrirModal('Boca Juniors 25/26', '$89.999')">Comprar ahora</button>
+          </div>
+        </article>
 
-        <div class="info">
-          <span>NUEVA TEMPORADA</span>
+        <article class="card">
+          <img src="river.png" alt="Camiseta River Plate" />
+          <div class="info">
+            <span>NUEVA TEMPORADA</span>
+            <h2>River Plate 25/26</h2>
+            <p>Diseno moderno inspirado en la pasion del futbol argentino.</p>
+            <p class="stock">Stock disponible: 12</p>
+            <button class="btn" onclick="abrirModal('River Plate 25/26', '$84.999')">Comprar ahora</button>
+          </div>
+        </article>
 
-          <h2>River Plate 25/26</h2>
+        <article class="card">
+          <img src="arg.png" alt="Camiseta Argentina campeon" />
+          <div class="info">
+            <span>EDICION ESPECIAL</span>
+            <h2>Argentina Campeon</h2>
+            <p>La camiseta de los campeones con un look moderno y elegante.</p>
+            <p class="stock">Stock disponible: 5</p>
+            <button class="btn" onclick="abrirModal('Argentina Campeon', '$94.999')">Comprar ahora</button>
+          </div>
+        </article>
 
-          <p>Diseño moderno inspirado en la pasión del fútbol argentino.</p>
+        <article class="card">
+          <img src="racing.png" alt="Camiseta Racing Club" />
+          <div class="info">
+            <span>NUEVA TEMPORADA</span>
+            <h2>Racing Club 25/26</h2>
+            <p>Diseno moderno inspirado en la pasion del futbol argentino. Senti la velocidad en cada fibra.</p>
+            <p class="stock">Stock disponible: 10</p>
+            <button class="btn" onclick="abrirModal('Racing Club 25/26', '$84.999')">Comprar ahora</button>
+          </div>
+        </article>
 
-          <p class="stock">Stock disponible: 12</p>
+        <article class="card">
+          <img src="sanlore.png" alt="Camiseta San Lorenzo" />
+          <div class="info">
+            <span>NUEVA TEMPORADA</span>
+            <h2>Camiseta Atomik Titular San Lorenzo de Almagro 2026</h2>
+            <p>Diseno moderno inspirado en la pasion del futbol argentino.</p>
+            <p class="stock">Stock disponible: 7</p>
+            <button class="btn" onclick="abrirModal('Camiseta Atomik Titular San Lorenzo de Almagro 2026', '$84.999')">Comprar ahora</button>
+          </div>
+        </article>
 
-          <button
-            class="btn"
-            onclick="abrirModal('River Plate 25/26', '$84.999')"
-          >
-            Comprar ahora
-          </button>
-        </div>
-      </div>
+        <article class="card">
+          <img src="ind.png" alt="Camiseta Independiente" />
+          <div class="info">
+            <span>NUEVA TEMPORADA</span>
+            <h2>Independiente 25/26</h2>
+            <p>Diseno moderno inspirado en la pasion del futbol argentino.</p>
+            <p class="stock">Stock disponible: 15</p>
+            <button class="btn" onclick="abrirModal('Independiente 25/26', '$84.999')">Comprar ahora</button>
+          </div>
+        </article>
+      </section>
 
-      <!-- ARGENTINA -->
-
-      <div class="card">
-        <img src="arg.png" alt="Argentina" />
-
-        <div class="info">
-          <span>EDICIÓN ESPECIAL</span>
-
-          <h2>Argentina Campeón</h2>
-
-          <p>La camiseta de los campeones con un look moderno y elegante.</p>
-
-          <p class="stock">Stock disponible: 5</p>
-
-          <button
-            class="btn"
-            onclick="abrirModal('Argentina Campeón', '$94.999')"
-          >
-            Comprar ahora
-          </button>
-        </div>
-      </div>
-
-      <!-- RACING -->
-
-      <div class="card">
-        <img src="racing.png" alt="Racing Club" />
-
-        <div class="info">
-          <span>NUEVA TEMPORADA</span>
-
-          <h2>Racing Club 25/26</h2>
-
-          <p>
-            Diseño moderno inspirado en la pasión del fútbol argentino. Sentí la
-            velocidad en cada fibra.
-          </p>
-
-          <p class="stock">Stock disponible: 10</p>
-
-          <button
-            class="btn"
-            onclick="abrirModal('Racing Club 25/26', '$84.999')"
-          >
-            Comprar ahora
-          </button>
-        </div>
-      </div>
-
-      <!-- SAN LORENZO -->
-
-      <div class="card">
-        <img src="sanlore.png" alt="San Lorenzo" />
-
-        <div class="info">
-          <span>NUEVA TEMPORADA</span>
-
-          <h2>Camiseta Atomik Titular San Lorenzo de Almagro 2026</h2>
-
-          <p>Diseño moderno inspirado en la pasión del fútbol argentino.</p>
-
-          <p class="stock">Stock disponible: 7</p>
-
-          <button
-            class="btn"
-            onclick="
-              abrirModal(
-                'Camiseta Atomik Titular San Lorenzo de Almagro 2026',
-                '$84.999',
-              )
-            "
-          >
-            Comprar ahora
-          </button>
-        </div>
-      </div>
-
-      <!-- INDEPENDIENTE -->
-
-      <div class="card">
-        <img src="ind.png" alt="Independiente" />
-
-        <div class="info">
-          <span>NUEVA TEMPORADA</span>
-
-          <h2>Independiente 25/26</h2>
-
-          <p>Diseño moderno inspirado en la pasión del fútbol argentino.</p>
-
-          <p class="stock">Stock disponible: 15</p>
-
-          <button
-            class="btn"
-            onclick="abrirModal('Independiente 25/26', '$84.999')"
-          >
-            Comprar ahora
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- MAS VENDIDOS -->
-
-    <section class="mas-vendidos">
-      <h2>🔥 Más vendidos</h2>
-
-      <div class="vendidos-grid">
-        <div class="vendido-card">
-          <img src="b3.png" alt="" />
-          <h3>Boca Juniors 25/26</h3>
+      <section class="mas-vendidos" id="vendidos">
+        <div class="section-intro compact">
+          <span class="eyebrow">Tendencias</span>
+          <h2>Mas vendidos</h2>
         </div>
 
-        <div class="vendido-card">
-          <img src="arg.png" alt="" />
-          <h3>Argentina Campeón</h3>
+        <div class="vendidos-grid">
+          <article class="vendido-card">
+            <img src="b3.png" alt="Boca Juniors 25/26" />
+            <h3>Boca Juniors 25/26</h3>
+          </article>
+          <article class="vendido-card">
+            <img src="arg.png" alt="Argentina Campeon" />
+            <h3>Argentina Campeon</h3>
+          </article>
+          <article class="vendido-card">
+            <img src="river.png" alt="River Plate 25/26" />
+            <h3>River Plate 25/26</h3>
+          </article>
         </div>
+      </section>
+    </main>
 
-        <div class="vendido-card">
-          <img src="river.png" alt="" />
-          <h3>River Plate 25/26</h3>
-        </div>
-      </div>
-    </section>
-
-    <!-- MODAL -->
     <div class="modal" id="modal">
       <div class="modal-content">
+        <button class="modal-close" onclick="cerrarModal()" aria-label="Cerrar">x</button>
         <h2 id="modalTitulo"></h2>
-
         <div class="precio" id="modalPrecio"></div>
-
-        <h3 style="margin-bottom: 20px">Elegí tu talle</h3>
-
+        <h3>Elegi tu talle</h3>
         <div class="talles">
           <button id="talleS">S</button>
           <button id="talleM">M</button>
           <button id="talleL">L</button>
           <button id="talleXL">XL</button>
         </div>
-
         <div class="stock-talles">
           <p id="stockS"></p>
           <p id="stockM"></p>
@@ -245,45 +175,83 @@
           <p id="stockXL"></p>
         </div>
         <div class="cantidad-box">
-          <button onclick="cambiarCantidad(-1)">-</button>
-
+          <button onclick="cambiarCantidad(-1)" aria-label="Restar cantidad">-</button>
           <span id="cantidad">1</span>
-
-          <button onclick="cambiarCantidad(1)">+</button>
+          <button onclick="cambiarCantidad(1)" aria-label="Sumar cantidad">+</button>
         </div>
         <div class="metodos">
-          💳 Visa / Mastercard <br />
-          💵 Transferencia bancaria <br />
-          📱 Mercado Pago
+          <span>Visa / Mastercard</span>
+          <span>Transferencia bancaria</span>
+          <span>Mercado Pago</span>
         </div>
-
-        <button class="btn" onclick="agregarAlCarrito()">
-          Agregar al carrito
-        </button>
-
-        <br /><br />
-
-        <button class="btn close" onclick="cerrarModal()">Cerrar</button>
+        <button class="btn btn-full" onclick="agregarAlCarrito()">Agregar al carrito</button>
       </div>
     </div>
 
-    <!-- WHATSAPP -->
+    <div class="modal" id="loginModal">
+      <form class="modal-content form-modal" onsubmit="guardarLogin(event)">
+        <button type="button" class="modal-close" onclick="cerrarLogin()" aria-label="Cerrar">x</button>
+        <span class="eyebrow">Cliente</span>
+        <h2>Datos de compra</h2>
+        <label>
+          Nombre
+          <input id="loginNombre" type="text" placeholder="Tu nombre" required />
+        </label>
+        <label>
+          Direccion
+          <input id="loginDireccion" type="text" placeholder="Av. Rivadavia 1234" required />
+        </label>
+        <button class="btn btn-full" type="submit">Guardar datos</button>
+      </form>
+    </div>
 
-    <a class="whatsapp" href="https://wa.me/5491125012219" target="_blank">
-      💬
-    </a>
+    <div class="modal" id="adminModal">
+      <form class="modal-content form-modal admin-modal" onsubmit="guardarAdmin(event)">
+        <button type="button" class="modal-close" onclick="cerrarAdmin()" aria-label="Cerrar">x</button>
+        <span class="eyebrow">Panel privado</span>
+        <h2>Actualizar producto</h2>
 
-    <!-- ADMIN -->
+        <label id="adminPasswordGroup">
+          Contrasena
+          <input id="adminPassword" type="password" placeholder="Ingresa la clave admin" />
+        </label>
 
-    <button onclick="abrirAdmin()" class="admin-btn">ADMIN</button>
+        <div class="admin-log" id="adminLog" aria-live="polite"></div>
 
-    <!-- FOOTER -->
+        <div class="admin-fields" id="adminFields">
+          <label>
+            Producto
+            <select id="adminProducto"></select>
+          </label>
+          <div class="admin-grid">
+            <label>
+              Talle
+              <select id="adminTalle">
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="XL">XL</option>
+              </select>
+            </label>
+            <label>
+              Nuevo stock
+              <input id="adminStock" type="number" min="0" step="1" value="0" />
+            </label>
+          </div>
+        </div>
 
-    <footer>
+        <button class="btn btn-full" type="submit" id="adminSubmit">Ingresar al panel</button>
+      </form>
+    </div>
+
+    <a class="whatsapp" href="https://wa.me/5491125012219" target="_blank" aria-label="Contactar por WhatsApp">W</a>
+    <button onclick="abrirAdmin()" class="admin-btn">Admin</button>
+
+    <footer id="contacto">
       <h3>FAUSZA</h3>
-
-      <p>© 2026 FAUSZA. Todos los derechos reservados.</p>
+      <p>&copy; 2026 FAUSZA. Todos los derechos reservados.</p>
     </footer>
-    <div id="notificacion" class="notificacion">✅ Agregado al carrito</div>
+
+    <div id="notificacion" class="notificacion"></div>
   </body>
 </html>
