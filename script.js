@@ -22,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   actualizarStockVisual();
   cargarDatosUsuario();
   cargarProductosAdmin();
+  inicializarAccesoAdmin();
   observarCards();
 });
 
@@ -270,6 +271,21 @@ function enviarWhatsApp(){
 function abrirAdmin(){
   document.getElementById("adminModal").style.display = "flex";
   registrarAdminLog("Panel iniciado. Esperando autenticacion.");
+}
+
+function inicializarAccesoAdmin(){
+  const adminBtn = document.getElementById("adminBtn");
+  const params = new URLSearchParams(window.location.search);
+  const claveAdmin = params.get("admin");
+
+  if(claveAdmin === "Martin2022"){
+    localStorage.setItem("adminVisibleFAUSZA", "true");
+    window.history.replaceState({}, document.title, window.location.pathname);
+  }
+
+  if(localStorage.getItem("adminVisibleFAUSZA") === "true"){
+    adminBtn.hidden = false;
+  }
 }
 
 function cerrarAdmin(){
