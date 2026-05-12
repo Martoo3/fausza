@@ -1,477 +1,360 @@
-let stockProductos =
-  JSON.parse(localStorage.getItem('stockFAUSZA')) || {
-
-    "Boca Juniors 25/26": {
-      S: 3,
-      M: 5,
-      L: 2,
-      XL: 1
-    },
-
-    "River Plate 25/26": {
-      S: 4,
-      M: 4,
-      L: 3,
-      XL: 2
-    },
-
-    "Argentina Campeón": {
-      S: 2,
-      M: 2,
-      L: 1,
-      XL: 0
-    },
-
-    "Racing Club 25/26": {
-      S: 5,
-      M: 3,
-      L: 2,
-      XL: 1
-    },
-
-    "Camiseta Atomik Titular San Lorenzo de Almagro 2026": {
-      S: 3,
-      M: 2,
-      L: 2,
-      XL: 1
-    },
-
-    "Independiente 25/26": {
-      S: 2,
-      M: 1,
-      L: 0,
-      XL: 1
-    }
-
+const stockInicial = {
+  "Boca Juniors 25/26": { S: 3, M: 5, L: 2, XL: 1 },
+  "River Plate 25/26": { S: 4, M: 4, L: 3, XL: 2 },
+  "Argentina Campeon": { S: 2, M: 2, L: 1, XL: 0 },
+  "Racing Club 25/26": { S: 5, M: 3, L: 2, XL: 1 },
+  "Camiseta Atomik Titular San Lorenzo de Almagro 2026": { S: 3, M: 2, L: 2, XL: 1 },
+  "Independiente 25/26": { S: 2, M: 1, L: 0, XL: 1 }
 };
 
-const cards = document.querySelectorAll('.card');
-
+let stockProductos = cargarStock();
 let talleSeleccionado = "";
+let cantidadSeleccionada = 1;
+let carrito = JSON.parse(localStorage.getItem("carritoFAUSZA")) || [];
+let usuarioLogeado = localStorage.getItem("usuarioFAUSZA") || "";
+let adminAutenticado = false;
 
-let carrito =
-  JSON.parse(localStorage.getItem('carritoFAUSZA')) || [];
+const cards = document.querySelectorAll(".card");
+const botonesTalles = document.querySelectorAll(".talles button");
 
-let usuarioLogeado =
-  localStorage.getItem('usuarioFAUSZA') || "";
-
-actualizarCarrito();
-actualizarStockVisual();
-
-if(usuarioLogeado){
-
-  document.getElementById('nombreUsuario').innerText =
-    usuarioLogeado;
-
-}
-
-window.addEventListener('scroll', () => {
-
-  cards.forEach(card => {
-
-    const top = card.getBoundingClientRect().top;
-
-    if(top < window.innerHeight - 100){
-      card.classList.add('show');
-    }
-
-  });
-
+document.addEventListener("DOMContentLoaded", () => {
+  actualizarCarrito();
+  actualizarStockVisual();
+  cargarDatosUsuario();
+  cargarProductosAdmin();
+  observarCards();
 });
 
+function cargarStock(){
+  const guardado = JSON.parse(localStorage.getItem("stockFAUSZA")) || {};
+
+  Object.keys(guardado).forEach(producto => {
+    if(producto.includes("Argentina") && producto !== "Argentina Campeon"){
+      guardado["Argentina Campeon"] = guardado[producto];
+      delete guardado[producto];
+    }
+  });
+
+  return {
+    ...stockInicial,
+    ...guardado
+  };
+}
+
+function persistirStock(){
+  localStorage.setItem("stockFAUSZA", JSON.stringify(stockProductos));
+}
+
+function observarCards(){
+  const mostrarCard = () => {
+    cards.forEach(card => {
+      const top = card.getBoundingClientRect().top;
+
+      if(top < window.innerHeight - 80){
+        card.classList.add("show");
+      }
+    });
+  };
+
+  mostrarCard();
+  window.addEventListener("scroll", mostrarCard);
+}
+
+function toggleMenu(){
+  document.getElementById("mainNav").classList.toggle("open");
+}
+
 function abrirModal(nombre, precio){
-
-  document.getElementById('modal').style.display = 'flex';
-
-  document.getElementById('modalTitulo').innerText = nombre;
-
-  document.getElementById('modalPrecio').innerText = precio;
   const stock = stockProductos[nombre];
 
-document.getElementById('stockS').innerText =
-  "S: " + stock.S + " disponibles";
+  if(!stock){
+    mostrarNotificacion("No se encontro stock para este producto.", "error");
+    return;
+  }
 
-document.getElementById('stockM').innerText =
-  "M: " + stock.M + " disponibles";
-
-document.getElementById('stockL').innerText =
-  "L: " + stock.L + " disponibles";
-
-document.getElementById('stockXL').innerText =
-  "XL: " + stock.XL + " disponibles";
+  document.getElementById("modal").style.display = "flex";
+  document.getElementById("modalTitulo").innerText = nombre;
+  document.getElementById("modalPrecio").innerText = precio;
+  actualizarStockTalles(nombre);
 
   talleSeleccionado = "";
-
-  document.querySelectorAll('.talles button').forEach(btn => {
-
-    btn.style.background = "#1a1a1a";
-    btn.style.border = "1px solid #333";
-
-  });
   cantidadSeleccionada = 1;
-
-  document.getElementById('cantidad').innerText = 1;
+  document.getElementById("cantidad").innerText = "1";
+  botonesTalles.forEach(btn => btn.classList.remove("selected"));
 }
 
 function cerrarModal(){
-
-  document.getElementById('modal').style.display = 'none';
-
+  document.getElementById("modal").style.display = "none";
 }
 
-const botonesTalles =
-  document.querySelectorAll('.talles button');
+function actualizarStockTalles(nombre){
+  const stock = stockProductos[nombre];
+  document.getElementById("stockS").innerText = `S: ${stock.S} disponibles`;
+  document.getElementById("stockM").innerText = `M: ${stock.M} disponibles`;
+  document.getElementById("stockL").innerText = `L: ${stock.L} disponibles`;
+  document.getElementById("stockXL").innerText = `XL: ${stock.XL} disponibles`;
+}
 
 botonesTalles.forEach(btn => {
-
-  btn.addEventListener('click', () => {
-
-    botonesTalles.forEach(b => {
-
-      b.style.background = "#1a1a1a";
-      b.style.border = "1px solid #333";
-
-    });
-
-    btn.style.background = "#4da3ff";
-    btn.style.border = "1px solid #4da3ff";
-
+  btn.addEventListener("click", () => {
+    botonesTalles.forEach(boton => boton.classList.remove("selected"));
+    btn.classList.add("selected");
     talleSeleccionado = btn.innerText;
-
   });
-
 });
-let cantidadSeleccionada = 1;
 
 function cambiarCantidad(valor){
-
   cantidadSeleccionada += valor;
 
   if(cantidadSeleccionada < 1){
     cantidadSeleccionada = 1;
   }
 
-  document.getElementById('cantidad').innerText =
-    cantidadSeleccionada;
-
+  document.getElementById("cantidad").innerText = cantidadSeleccionada;
 }
+
 function agregarAlCarrito(){
-
   if(talleSeleccionado === ""){
-
-    alert("Seleccioná un talle");
-
+    mostrarNotificacion("Selecciona un talle antes de continuar.", "error");
     return;
-
   }
 
-  const producto =
-    document.getElementById('modalTitulo').innerText;
-
-  let stock =
-    stockProductos[producto][talleSeleccionado];
+  const producto = document.getElementById("modalTitulo").innerText;
+  const stock = stockProductos[producto][talleSeleccionado];
 
   if(stock < cantidadSeleccionada){
-
-    alert("No hay suficiente stock");
-
+    mostrarNotificacion("No hay suficiente stock para esa cantidad.", "error");
     return;
-
   }
 
-  stockProductos[producto][talleSeleccionado] -=
-    cantidadSeleccionada;
-
-  localStorage.setItem(
-    'stockFAUSZA',
-    JSON.stringify(stockProductos)
-  );
+  stockProductos[producto][talleSeleccionado] -= cantidadSeleccionada;
+  persistirStock();
 
   for(let i = 0; i < cantidadSeleccionada; i++){
-
-    carrito.push({
-      producto,
-      talle: talleSeleccionado
-    });
-
+    carrito.push({ producto, talle: talleSeleccionado });
   }
 
-  localStorage.setItem(
-    'carritoFAUSZA',
-    JSON.stringify(carrito)
-  );
-
+  localStorage.setItem("carritoFAUSZA", JSON.stringify(carrito));
   actualizarCarrito();
-
   actualizarStockVisual();
-
-  mostrarNotificacion();
-
-  cantidadSeleccionada = 1;
-
-  document.getElementById('cantidad').innerText = 1;
-
+  mostrarNotificacion("Producto agregado al carrito.");
   cerrarModal();
-
 }
 
 function actualizarCarrito(){
+  document.getElementById("cartCount").innerText = carrito.length;
 
-  document.getElementById('cartCount').innerText =
-    carrito.length;
-
-  const cartItems =
-    document.getElementById('cartItems');
-
+  const cartItems = document.getElementById("cartItems");
   cartItems.innerHTML = "";
 
-  carrito.forEach((item, index) => {
+  if(carrito.length === 0){
+    cartItems.innerHTML = '<p class="cart-empty">Todavia no agregaste productos.</p>';
+    return;
+  }
 
+  carrito.forEach((item, index) => {
     cartItems.innerHTML += `
       <div class="cart-item">
-
         <strong>${item.producto}</strong><br>
-
         Talle: ${item.talle}
-
-        <br><br>
-
-        <button
-          class="btn-eliminar"
-          onclick="eliminarProducto(${index})">
-
-          Eliminar
-
-        </button>
-
+        <br>
+        <button class="btn-eliminar" onclick="eliminarProducto(${index})">Eliminar</button>
       </div>
     `;
-
   });
-
 }
 
 function eliminarProducto(index){
+  const producto = carrito[index].producto;
+  const talle = carrito[index].talle;
 
-  const producto =
-    carrito[index].producto;
-
-  const talle =
-    carrito[index].talle;
-
-  stockProductos[producto][talle]++;
-
-  localStorage.setItem(
-    'stockFAUSZA',
-    JSON.stringify(stockProductos)
-  );
+  if(stockProductos[producto] && stockProductos[producto][talle] !== undefined){
+    stockProductos[producto][talle]++;
+    persistirStock();
+  }
 
   carrito.splice(index, 1);
-
-  localStorage.setItem(
-    'carritoFAUSZA',
-    JSON.stringify(carrito)
-  );
-
+  localStorage.setItem("carritoFAUSZA", JSON.stringify(carrito));
   actualizarCarrito();
-
   actualizarStockVisual();
-
+  mostrarNotificacion("Producto eliminado del carrito.");
 }
 
 function actualizarStockVisual(){
-
-  const cards =
-    document.querySelectorAll('.card');
-
-  cards.forEach(card => {
-
-    const titulo =
-      card.querySelector('h2').innerText.trim();
-
-    const boton =
-      card.querySelector('.btn');
-
-    const stockTexto =
-      card.querySelector('.stock');
-
-    const talles =
-      stockProductos[titulo];
+  document.querySelectorAll(".card").forEach(card => {
+    const titulo = card.querySelector("h2").innerText.trim();
+    const boton = card.querySelector(".btn");
+    const stockTexto = card.querySelector(".stock");
+    const talles = stockProductos[titulo];
 
     if(!talles){
       return;
     }
 
-    let totalStock = 0;
-
-    for(let talle in talles){
-
-      totalStock += talles[talle];
-
-    }
+    const totalStock = Object.values(talles).reduce((total, cantidad) => total + Number(cantidad), 0);
 
     if(totalStock <= 0){
-
       stockTexto.innerText = "SIN STOCK";
-
-      stockTexto.style.color = "red";
-
+      stockTexto.classList.add("sin-stock");
       boton.disabled = true;
-
       boton.innerText = "Sin stock";
-
-      boton.style.opacity = "0.5";
-
     } else {
-
-      stockTexto.innerText =
-        "Stock disponible: " + totalStock;
-
-      stockTexto.style.color = "#00ff88";
-
+      stockTexto.innerText = `Stock disponible: ${totalStock}`;
+      stockTexto.classList.remove("sin-stock");
       boton.disabled = false;
-
       boton.innerText = "Comprar ahora";
-
-      boton.style.opacity = "1";
-
     }
-
   });
-
 }
 
 function toggleCart(){
-
-  document
-    .getElementById('cartPanel')
-    .classList.toggle('open');
-
+  document.getElementById("cartPanel").classList.toggle("open");
 }
 
-function login(){
+function abrirLogin(){
+  document.getElementById("loginModal").style.display = "flex";
+  document.getElementById("loginNombre").value = localStorage.getItem("usuarioFAUSZA") || "";
+  document.getElementById("loginDireccion").value = localStorage.getItem("direccionFAUSZA") || "";
+}
 
-  const usuario = prompt('Ingresá tu nombre');
+function cerrarLogin(){
+  document.getElementById("loginModal").style.display = "none";
+}
 
-  if(!usuario) return;
+function guardarLogin(event){
+  event.preventDefault();
 
-  const direccion = prompt(
-    'Ingresá tu dirección.\n\nEjemplo:\nAv. Rivadavia 1234'
-  );
+  const usuario = document.getElementById("loginNombre").value.trim();
+  const direccion = document.getElementById("loginDireccion").value.trim();
 
-  if(!direccion) return;
+  if(!usuario || !direccion){
+    mostrarNotificacion("Completa tu nombre y direccion.", "error");
+    return;
+  }
 
   usuarioLogeado = usuario;
+  localStorage.setItem("usuarioFAUSZA", usuario);
+  localStorage.setItem("direccionFAUSZA", direccion);
+  document.getElementById("nombreUsuario").innerText = usuario;
+  cerrarLogin();
+  mostrarNotificacion(`Datos guardados. Bienvenido ${usuario}.`);
+}
 
-  localStorage.setItem(
-    'usuarioFAUSZA',
-    usuario
-  );
-
-  localStorage.setItem(
-    'direccionFAUSZA',
-    direccion
-  );
-
-  document.getElementById('nombreUsuario').innerText =
-    usuario;
-
-  alert('Bienvenido ' + usuario);
-
+function cargarDatosUsuario(){
+  if(usuarioLogeado){
+    document.getElementById("nombreUsuario").innerText = usuarioLogeado;
+  }
 }
 
 function enviarWhatsApp(){
-
   if(carrito.length === 0){
-
-    alert("Tu carrito está vacío");
-
+    mostrarNotificacion("Tu carrito esta vacio.", "error");
     return;
-
   }
 
-  const direccion =
-    localStorage.getItem('direccionFAUSZA') || "";
+  const direccion = localStorage.getItem("direccionFAUSZA") || "";
+  const cliente = usuarioLogeado || "Sin registrar";
 
-  let mensaje =
-    "Hola FAUSZA, quiero comprar:%0A%0A";
+  let mensaje = "Hola FAUSZA, quiero comprar:%0A%0A";
 
   carrito.forEach(item => {
-
-    mensaje +=
-      `• ${item.producto} - Talle ${item.talle}%0A`;
-
+    mensaje += `- ${item.producto} - Talle ${item.talle}%0A`;
   });
 
-  mensaje +=
-    `%0A👤 Cliente: ${usuarioLogeado}`;
+  mensaje += `%0ACliente: ${cliente}`;
+  mensaje += `%0ADireccion: ${direccion || "Sin direccion cargada"}`;
 
-  mensaje +=
-    `%0A📍 Dirección: ${direccion}`;
-
-  const numero = "5491125012219";
-
-  window.open(
-    `https://wa.me/${numero}?text=${mensaje}`,
-    '_blank'
-  );
-
+  window.open(`https://wa.me/5491125012219?text=${mensaje}`, "_blank");
 }
 
 function abrirAdmin(){
+  document.getElementById("adminModal").style.display = "flex";
+  registrarAdminLog("Panel iniciado. Esperando autenticacion.");
+}
 
-  let password =
-    prompt("Contraseña admin");
+function cerrarAdmin(){
+  document.getElementById("adminModal").style.display = "none";
+}
 
-  if(password !== "Martin2022"){
+function cargarProductosAdmin(){
+  const select = document.getElementById("adminProducto");
+  select.innerHTML = "";
 
-    alert("Contraseña incorrecta");
+  Object.keys(stockProductos).forEach(producto => {
+    const option = document.createElement("option");
+    option.value = producto;
+    option.textContent = producto;
+    select.appendChild(option);
+  });
+}
 
+function guardarAdmin(event){
+  event.preventDefault();
+
+  if(!adminAutenticado){
+    const password = document.getElementById("adminPassword").value;
+
+    if(password !== "Martin2022"){
+      registrarAdminLog("Acceso denegado: contrasena incorrecta.");
+      mostrarNotificacion("Acceso admin denegado.", "error");
+      return;
+    }
+
+    adminAutenticado = true;
+    document.getElementById("adminPasswordGroup").style.display = "none";
+    document.getElementById("adminFields").classList.add("open");
+    document.getElementById("adminSubmit").innerText = "Actualizar stock";
+    registrarAdminLog("Acceso concedido. Selecciona producto, talle y stock.");
     return;
-
   }
 
-  let producto =
-    prompt("Nombre exacto del producto");
+  const producto = document.getElementById("adminProducto").value;
+  const talle = document.getElementById("adminTalle").value;
+  const nuevoStock = Number(document.getElementById("adminStock").value);
 
   if(!stockProductos[producto]){
-
-    alert("Producto no encontrado");
-
+    registrarAdminLog(`Error: producto no encontrado (${producto}).`);
+    mostrarNotificacion("Producto no encontrado.", "error");
     return;
-
   }
 
-  let talle =
-    prompt("Talle: S M L XL");
+  if(!Number.isInteger(nuevoStock) || nuevoStock < 0){
+    registrarAdminLog("Error: el stock debe ser un numero entero positivo.");
+    mostrarNotificacion("Ingresa un stock valido.", "error");
+    return;
+  }
 
-  let nuevoStock =
-    parseInt(prompt("Nuevo stock"));
-
-  stockProductos[producto][talle] =
-    nuevoStock;
-
-  localStorage.setItem(
-    'stockFAUSZA',
-    JSON.stringify(stockProductos)
-  );
-
+  stockProductos[producto][talle] = nuevoStock;
+  persistirStock();
   actualizarStockVisual();
-
-  alert("Stock actualizado");
-
+  cargarProductosAdmin();
+  registrarAdminLog(`Stock actualizado: ${producto} / talle ${talle} = ${nuevoStock}.`);
+  mostrarNotificacion("Stock actualizado correctamente.");
 }
-function mostrarNotificacion(){
 
-  const notif =
-    document.getElementById('notificacion');
+function registrarAdminLog(mensaje){
+  const log = document.getElementById("adminLog");
 
-  notif.classList.add('show');
+  if(!log){
+    return;
+  }
+
+  const hora = new Date().toLocaleTimeString("es-AR", {
+    hour: "2-digit",
+    minute: "2-digit",
+    second: "2-digit"
+  });
+
+  log.innerHTML = `<div>[${hora}] ${mensaje}</div>` + log.innerHTML;
+}
+
+function mostrarNotificacion(mensaje, tipo = "ok"){
+  const notif = document.getElementById("notificacion");
+  notif.innerText = mensaje;
+  notif.style.background = tipo === "error" ? "rgba(255,59,48,0.96)" : "rgba(29,29,31,0.96)";
+  notif.classList.add("show");
 
   setTimeout(() => {
-
-    notif.classList.remove('show');
-
-  }, 2000);
-
+    notif.classList.remove("show");
+  }, 2600);
 }
