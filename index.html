@@ -5,17 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FAUSZA</title>
     <link rel="stylesheet" href="style.css" />
-    <link rel="icon" type="image/png" href="fausza-logo.png" />
+    <link rel="icon" type="image/png" href="logo.png" />
+
     <script src="script.js" defer></script>
   </head>
 
   <body>
     <header class="site-header">
       <a class="brand" href="#inicio" aria-label="Ir al inicio">
-        <img src="fausza-logo.png" alt="FAUSZA" />
+        <img src="logo.png" alt="FAUSZA" />
       </a>
 
-      <button class="menu-toggle" onclick="toggleMenu()" aria-label="Abrir menu">
+      <button
+        class="menu-toggle"
+        onclick="toggleMenu()"
+        aria-label="Abrir menu"
+      >
         <span></span>
         <span></span>
         <span></span>
@@ -42,10 +47,18 @@
     </header>
 
     <aside class="cart-panel" id="cartPanel">
-      <button class="close-cart" onclick="toggleCart()" aria-label="Cerrar carrito">x</button>
+      <button
+        class="close-cart"
+        onclick="toggleCart()"
+        aria-label="Cerrar carrito"
+      >
+        x
+      </button>
       <h2>Tu carrito</h2>
       <div id="cartItems"></div>
-      <button class="btn btn-full" onclick="enviarWhatsApp()">Finalizar compra</button>
+      <button class="btn btn-full" onclick="enviarWhatsApp()">
+        Finalizar compra
+      </button>
     </aside>
 
     <main>
@@ -54,7 +67,10 @@
         <div class="hero-content">
           <span class="eyebrow">Camisetas premium</span>
           <h1>FAUSZA</h1>
-          <p>Equipos argentinos, terminacion superior y una experiencia de compra simple.</p>
+          <p>
+            Equipos argentinos, terminacion superior y una experiencia de compra
+            simple.
+          </p>
           <a class="btn hero-btn" href="#productos">Ver catalogo</a>
         </div>
       </section>
@@ -73,7 +89,12 @@
             <h2>Boca Juniors 25/26</h2>
             <p>Camiseta titular con calidad premium y detalles autenticos.</p>
             <p class="stock">Stock disponible: 8</p>
-            <button class="btn" onclick="abrirModal('Boca Juniors 25/26', '$89.999')">Comprar ahora</button>
+            <button
+              class="btn"
+              onclick="abrirModal('Boca Juniors 25/26', '$89.999')"
+            >
+              Comprar ahora
+            </button>
           </div>
         </article>
 
@@ -84,7 +105,12 @@
             <h2>River Plate 25/26</h2>
             <p>Diseno moderno inspirado en la pasion del futbol argentino.</p>
             <p class="stock">Stock disponible: 12</p>
-            <button class="btn" onclick="abrirModal('River Plate 25/26', '$84.999')">Comprar ahora</button>
+            <button
+              class="btn"
+              onclick="abrirModal('River Plate 25/26', '$84.999')"
+            >
+              Comprar ahora
+            </button>
           </div>
         </article>
 
@@ -95,7 +121,12 @@
             <h2>Argentina Campeon</h2>
             <p>La camiseta de los campeones con un look moderno y elegante.</p>
             <p class="stock">Stock disponible: 5</p>
-            <button class="btn" onclick="abrirModal('Argentina Campeon', '$94.999')">Comprar ahora</button>
+            <button
+              class="btn"
+              onclick="abrirModal('Argentina Campeon', '$94.999')"
+            >
+              Comprar ahora
+            </button>
           </div>
         </article>
 
@@ -104,9 +135,17 @@
           <div class="info">
             <span>NUEVA TEMPORADA</span>
             <h2>Racing Club 25/26</h2>
-            <p>Diseno moderno inspirado en la pasion del futbol argentino. Senti la velocidad en cada fibra.</p>
+            <p>
+              Diseno moderno inspirado en la pasion del futbol argentino. Senti
+              la velocidad en cada fibra.
+            </p>
             <p class="stock">Stock disponible: 10</p>
-            <button class="btn" onclick="abrirModal('Racing Club 25/26', '$84.999')">Comprar ahora</button>
+            <button
+              class="btn"
+              onclick="abrirModal('Racing Club 25/26', '$84.999')"
+            >
+              Comprar ahora
+            </button>
           </div>
         </article>
 
@@ -117,7 +156,17 @@
             <h2>Camiseta Atomik Titular San Lorenzo de Almagro 2026</h2>
             <p>Diseno moderno inspirado en la pasion del futbol argentino.</p>
             <p class="stock">Stock disponible: 7</p>
-            <button class="btn" onclick="abrirModal('Camiseta Atomik Titular San Lorenzo de Almagro 2026', '$84.999')">Comprar ahora</button>
+            <button
+              class="btn"
+              onclick="
+                abrirModal(
+                  'Camiseta Atomik Titular San Lorenzo de Almagro 2026',
+                  '$84.999',
+                )
+              "
+            >
+              Comprar ahora
+            </button>
           </div>
         </article>
 
@@ -128,7 +177,12 @@
             <h2>Independiente 25/26</h2>
             <p>Diseno moderno inspirado en la pasion del futbol argentino.</p>
             <p class="stock">Stock disponible: 15</p>
-            <button class="btn" onclick="abrirModal('Independiente 25/26', '$84.999')">Comprar ahora</button>
+            <button
+              class="btn"
+              onclick="abrirModal('Independiente 25/26', '$84.999')"
+            >
+              Comprar ahora
+            </button>
           </div>
         </article>
       </section>
@@ -158,7 +212,9 @@
 
     <div class="modal" id="modal">
       <div class="modal-content">
-        <button class="modal-close" onclick="cerrarModal()" aria-label="Cerrar">x</button>
+        <button class="modal-close" onclick="cerrarModal()" aria-label="Cerrar">
+          x
+        </button>
         <h2 id="modalTitulo"></h2>
         <div class="precio" id="modalPrecio"></div>
         <h3>Elegi tu talle</h3>
@@ -175,45 +231,82 @@
           <p id="stockXL"></p>
         </div>
         <div class="cantidad-box">
-          <button onclick="cambiarCantidad(-1)" aria-label="Restar cantidad">-</button>
+          <button onclick="cambiarCantidad(-1)" aria-label="Restar cantidad">
+            -
+          </button>
           <span id="cantidad">1</span>
-          <button onclick="cambiarCantidad(1)" aria-label="Sumar cantidad">+</button>
+          <button onclick="cambiarCantidad(1)" aria-label="Sumar cantidad">
+            +
+          </button>
         </div>
         <div class="metodos">
           <span>Visa / Mastercard</span>
           <span>Transferencia bancaria</span>
           <span>Mercado Pago</span>
         </div>
-        <button class="btn btn-full" onclick="agregarAlCarrito()">Agregar al carrito</button>
+        <button class="btn btn-full" onclick="agregarAlCarrito()">
+          Agregar al carrito
+        </button>
       </div>
     </div>
 
     <div class="modal" id="loginModal">
       <form class="modal-content form-modal" onsubmit="guardarLogin(event)">
-        <button type="button" class="modal-close" onclick="cerrarLogin()" aria-label="Cerrar">x</button>
+        <button
+          type="button"
+          class="modal-close"
+          onclick="cerrarLogin()"
+          aria-label="Cerrar"
+        >
+          x
+        </button>
         <span class="eyebrow">Cliente</span>
         <h2>Datos de compra</h2>
         <label>
           Nombre
-          <input id="loginNombre" type="text" placeholder="Tu nombre" required />
+          <input
+            id="loginNombre"
+            type="text"
+            placeholder="Tu nombre"
+            required
+          />
         </label>
         <label>
           Direccion
-          <input id="loginDireccion" type="text" placeholder="Av. Rivadavia 1234" required />
+          <input
+            id="loginDireccion"
+            type="text"
+            placeholder="Av. Rivadavia 1234"
+            required
+          />
         </label>
         <button class="btn btn-full" type="submit">Guardar datos</button>
       </form>
     </div>
 
     <div class="modal" id="adminModal">
-      <form class="modal-content form-modal admin-modal" onsubmit="guardarAdmin(event)">
-        <button type="button" class="modal-close" onclick="cerrarAdmin()" aria-label="Cerrar">x</button>
+      <form
+        class="modal-content form-modal admin-modal"
+        onsubmit="guardarAdmin(event)"
+      >
+        <button
+          type="button"
+          class="modal-close"
+          onclick="cerrarAdmin()"
+          aria-label="Cerrar"
+        >
+          x
+        </button>
         <span class="eyebrow">Panel privado</span>
         <h2>Actualizar producto</h2>
 
         <label id="adminPasswordGroup">
           Contrasena
-          <input id="adminPassword" type="password" placeholder="Ingresa la clave admin" />
+          <input
+            id="adminPassword"
+            type="password"
+            placeholder="Ingresa la clave admin"
+          />
         </label>
 
         <div class="admin-log" id="adminLog" aria-live="polite"></div>
@@ -240,11 +333,19 @@
           </div>
         </div>
 
-        <button class="btn btn-full" type="submit" id="adminSubmit">Ingresar al panel</button>
+        <button class="btn btn-full" type="submit" id="adminSubmit">
+          Ingresar al panel
+        </button>
       </form>
     </div>
 
-    <a class="whatsapp" href="https://wa.me/5491125012219" target="_blank" aria-label="Contactar por WhatsApp">W</a>
+    <a
+      class="whatsapp"
+      href="https://wa.me/5491125012219"
+      target="_blank"
+      aria-label="Contactar por WhatsApp"
+      >W</a
+    >
     <button onclick="abrirAdmin()" class="admin-btn">Admin</button>
 
     <footer id="contacto">
