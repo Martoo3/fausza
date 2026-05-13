@@ -732,9 +732,9 @@ select:focus{
 }
 
 .whatsapp-hint{
-  position:absolute;
-  right:68px;
-  bottom:7px;
+  position:fixed;
+  right:92px;
+  bottom:33px;
   width:max-content;
   max-width:230px;
   padding:10px 13px;
@@ -746,14 +746,15 @@ select:focus{
   line-height:1.2;
   pointer-events:none;
   opacity:0;
-  transform:translateX(12px);
+  transform:translate(12px,50%);
   transition:0.3s ease;
   box-shadow:0 14px 30px rgba(0,0,0,0.18);
+  z-index:4600;
 }
 
 .whatsapp-hint.show{
   opacity:1;
-  transform:translateX(0);
+  transform:translate(0,50%);
 }
 
 .whatsapp-hint::after{
@@ -909,10 +910,15 @@ footer h3{
 
 @media screen and (max-width:520px){
   .whatsapp-hint{
-    right:0;
-    bottom:66px;
+    right:16px;
+    bottom:88px;
     max-width:190px;
     border-radius:16px;
+    transform:translateY(12px);
+  }
+
+  .whatsapp-hint.show{
+    transform:translateY(0);
   }
 
   .whatsapp-hint::after{
