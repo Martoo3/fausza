@@ -66,6 +66,12 @@ function toggleMenu(){
 }
 
 function abrirModal(nombre, precio){
+  if(!usuarioTieneDatos()){
+    mostrarNotificacion("Inicia sesion para poder comprar.", "error");
+    abrirLogin();
+    return;
+  }
+
   const stock = stockProductos[nombre];
 
   if(!stock){
@@ -115,6 +121,12 @@ function cambiarCantidad(valor){
 }
 
 function agregarAlCarrito(){
+  if(!usuarioTieneDatos()){
+    mostrarNotificacion("Inicia sesion para poder agregar productos.", "error");
+    abrirLogin();
+    return;
+  }
+
   if(talleSeleccionado === ""){
     mostrarNotificacion("Selecciona un talle antes de continuar.", "error");
     return;
@@ -146,12 +158,16 @@ function actualizarCarrito(){
   document.getElementById("cartCount").innerText = carrito.length;
 
   const cartItems = document.getElementById("cartItems");
+  const emptyCartBtn = document.getElementById("emptyCartBtn");
   cartItems.innerHTML = "";
 
   if(carrito.length === 0){
     cartItems.innerHTML = '<p class="cart-empty">Todavia no agregaste productos.</p>';
+    emptyCartBtn.style.display = "none";
     return;
   }
+
+  emptyCartBtn.style.display = "block";
 
   carrito.forEach((item, index) => {
     cartItems.innerHTML += `
@@ -179,6 +195,28 @@ function eliminarProducto(index){
   actualizarCarrito();
   actualizarStockVisual();
   mostrarNotificacion("Producto eliminado del carrito.");
+}
+
+function vaciarCarrito(){
+  if(carrito.length === 0){
+    mostrarNotificacion("Tu carrito ya esta vacio.", "error");
+    return;
+  }
+
+  carrito.forEach(item => {
+    const { producto, talle } = item;
+
+    if(stockProductos[producto] && stockProductos[producto][talle] !== undefined){
+      stockProductos[producto][talle]++;
+    }
+  });
+
+  carrito = [];
+  persistirStock();
+  localStorage.setItem("carritoFAUSZA", JSON.stringify(carrito));
+  actualizarCarrito();
+  actualizarStockVisual();
+  mostrarNotificacion("Carrito vaciado correctamente.");
 }
 
 function actualizarStockVisual(){
@@ -247,7 +285,20 @@ function cargarDatosUsuario(){
   }
 }
 
+function usuarioTieneDatos(){
+  const usuario = localStorage.getItem("usuarioFAUSZA") || "";
+  const direccion = localStorage.getItem("direccionFAUSZA") || "";
+
+  return usuario.trim() !== "" && direccion.trim() !== "";
+}
+
 function enviarWhatsApp(){
+  if(!usuarioTieneDatos()){
+    mostrarNotificacion("Inicia sesion para finalizar la compra.", "error");
+    abrirLogin();
+    return;
+  }
+
   if(carrito.length === 0){
     mostrarNotificacion("Tu carrito esta vacio.", "error");
     return;
