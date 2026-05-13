@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
   cargarDatosUsuario();
   cargarProductosAdmin();
   inicializarAccesoAdmin();
+  inicializarMensajeWhatsApp();
   observarCards();
 });
 
@@ -317,6 +318,34 @@ function enviarWhatsApp(){
   mensaje += `%0ADireccion: ${direccion || "Sin direccion cargada"}`;
 
   window.open(`https://wa.me/5491125012219?text=${mensaje}`, "_blank");
+}
+
+function inicializarMensajeWhatsApp(){
+  const whatsappHint = document.getElementById("whatsappHint");
+
+  if(!whatsappHint){
+    return;
+  }
+
+  const mensajes = [
+    "Tu consulta no molesta",
+    "Para consultar toca WhatsApp",
+    "Te ayudamos por WhatsApp"
+  ];
+  let indiceMensaje = 0;
+
+  const mostrarMensaje = () => {
+    whatsappHint.innerText = mensajes[indiceMensaje];
+    whatsappHint.classList.add("show");
+    indiceMensaje = (indiceMensaje + 1) % mensajes.length;
+
+    setTimeout(() => {
+      whatsappHint.classList.remove("show");
+    }, 4200);
+  };
+
+  setTimeout(mostrarMensaje, 1800);
+  setInterval(mostrarMensaje, 12000);
 }
 
 function abrirAdmin(){
