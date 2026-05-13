@@ -65,9 +65,12 @@ a{
 }
 
 .brand img{
-  width:auto;
-  height:54px;
+  width:92px;
+  height:auto;
+  max-height:58px;
   object-fit:contain;
+  display:block;
+  mix-blend-mode:multiply;
 }
 
 .main-nav{
@@ -131,7 +134,16 @@ a{
   border-radius:50%;
   background:var(--text);
   color:white;
-  font-size:12px;
+}
+
+.icon svg{
+  width:15px;
+  height:15px;
+  fill:none;
+  stroke:currentColor;
+  stroke-width:2.2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
 .cart-action strong{
@@ -717,6 +729,11 @@ select:focus{
   place-items:center;
   background:#25d366;
   color:white;
+}
+
+.whatsapp svg{
+  width:31px;
+  height:31px;
 }
 
 .admin-btn{
