@@ -189,7 +189,7 @@ a{
   top:72px;
   left:0;
   right:0;
-  height:34px;
+  height:40px;
   overflow:hidden;
   background:#1d1d1f;
   color:white;
@@ -202,24 +202,27 @@ a{
 .shipping-track{
   display:flex;
   align-items:center;
-  gap:64px;
-  min-width:max-content;
-  animation:shippingMove 14s linear infinite;
+  gap:60px;
+  width:max-content;
+  animation:shippingMove 16s linear infinite;
 }
 
 .shipping-track span{
   white-space:nowrap;
   font-size:14px;
   font-weight:900;
+  line-height:40px;
+  display:flex;
+  align-items:center;
 }
 
 @keyframes shippingMove{
   from{
-    transform:translateX(100vw);
+    transform:translateX(0);
   }
 
   to{
-    transform:translateX(-100%);
+    transform:translateX(-50%);
   }
 }
 
@@ -914,6 +917,14 @@ footer h3{
   .admin-grid{
     grid-template-columns:1fr;
   }
+  .shipping-bar{
+  height:34px;
+}
+
+.shipping-track span{
+  font-size:12px;
+  line-height:34px;
+}
 }
 
 @media screen and (max-width:520px){
