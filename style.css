@@ -20,7 +20,7 @@
 }
 
 html{
-  scroll-padding-top:142px;
+  scroll-padding-top:154px;
 }
 
 body{
@@ -51,7 +51,7 @@ a{
   top:0;
   left:0;
   right:0;
-  height:72px;
+  height:80px;
   padding:0 clamp(18px,4vw,56px);
   display:flex;
   align-items:center;
@@ -67,22 +67,23 @@ a{
   display:flex;
   align-items:center;
   justify-content:center;
-  width:72px;
-  height:72px;
+  width:76px;
+  height:76px;
   border-radius:50%;
   overflow:hidden;
-  background:#f5f5f7;
-  box-shadow:0 4px 14px rgba(0,0,0,0.12);
+  background:#ececef;
+  box-shadow:0 5px 16px rgba(0,0,0,0.14);
+  flex-shrink:0;
 }
 
 .brand img{
   width:100%;
   height:100%;
   object-fit:cover;
-  object-position:center;
+  object-position:center 53%;
   display:block;
   border-radius:50%;
-  transform:scale(1.35);
+  transform:scale(1.58);
 }
 
 .main-nav{
@@ -192,7 +193,7 @@ a{
 
 .shipping-bar{
   position:fixed;
-  top:72px;
+  top:80px;
   left:0;
   right:0;
   height:52px;
@@ -235,7 +236,7 @@ a{
 .hero{
   position:relative;
   min-height:92vh;
-  padding:174px 20px 80px;
+  padding:184px 20px 80px;
   background-image:url("banner.png");
   background-size:cover;
   background-position:center;
@@ -854,29 +855,28 @@ footer h3{
 @media screen and (max-width:900px){
 
   html{
-    scroll-padding-top:126px;
+    scroll-padding-top:136px;
   }
 
   .site-header{
     height:auto;
-    min-height:68px;
+    min-height:76px;
     flex-wrap:nowrap;
-    padding:10px 12px;
+    padding:6px 12px;
     gap:10px;
   }
 
   .brand{
-    width:58px;
-    height:58px;
-    flex-shrink:0;
+    width:64px;
+    height:64px;
   }
 
   .brand img{
-    transform:scale(1.2);
+    transform:scale(1.58);
   }
 
   .shipping-bar{
-    top:68px;
+    top:76px;
     height:46px;
   }
 
@@ -969,21 +969,21 @@ footer h3{
   }
 
   .site-header{
-    min-height:72px;
-    padding:7px 12px;
+    min-height:76px;
+    padding:5px 12px;
   }
 
   .brand{
-    width:56px;
-    height:56px;
+    width:66px;
+    height:66px;
   }
 
   .brand img{
-    transform:scale(1.22);
+    transform:scale(1.58);
   }
 
   .shipping-bar{
-    top:72px;
+    top:76px;
     height:54px;
   }
 
@@ -998,7 +998,7 @@ footer h3{
   }
 
   .hero{
-    padding-top:166px;
+    padding-top:170px;
   }
 
   .whatsapp-hint{
